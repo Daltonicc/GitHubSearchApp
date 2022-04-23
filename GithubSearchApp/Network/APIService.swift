@@ -36,12 +36,16 @@ extension GitHubSearchAPI: TargetType {
         }
     }
 
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         switch self {
         case .searchUser: return [
             "Accept": "application/vnd.github.v3+json",
             "Authorization": APIKey.authorization
         ]
         }
+    }
+
+    var validationType: ValidationType {
+        return .successCodes
     }
 }
