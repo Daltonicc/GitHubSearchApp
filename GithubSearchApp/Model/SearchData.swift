@@ -6,3 +6,15 @@
 //
 
 import Foundation
+
+struct SearchData {
+    let total: Int
+    let searchItems: [SearchItem]
+}
+
+struct SearchItem {
+    let userName: String
+    let userImage: String
+    let userID: Int
+    var isFavorite: Bool
+}
