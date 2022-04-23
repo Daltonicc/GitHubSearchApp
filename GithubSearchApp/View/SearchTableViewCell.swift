@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class SearchTableViewCell: UITableViewCell {
 
@@ -69,5 +70,16 @@ final class SearchTableViewCell: UITableViewCell {
             make.trailing.equalToSuperview().inset(20)
             make.width.equalTo(40)
         }
+    }
+
+    func cellConfig(searchItem: SearchItem) {
+
+        if let imageURL = URL(string: searchItem.userImage) {
+            userImageView.kf.setImage(with: imageURL)
+        } else {
+            userImageView.image = UIImage(systemName: "star")
+        }
+        userNameLabel.text = searchItem.userName
+        favoriteButton.tintColor = searchItem.isFavorite ? .systemYellow : .systemGray3
     }
 }
