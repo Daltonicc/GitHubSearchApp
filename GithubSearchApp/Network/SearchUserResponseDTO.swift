@@ -6,3 +6,41 @@
 //
 
 import Foundation
+// MARK: - SearchUserResponseDTO
+struct SearchUserResponseDTO: Codable {
+    let totalCount: Int
+    let items: [Item]
+
+    enum CodingKeys: String, CodingKey {
+        case totalCount = "total_count"
+        case items
+    }
+}
+
+// MARK: - Item
+struct Item: Codable {
+    let login: String
+    let id: Int
+    let avatarURL: String
+
+    enum CodingKeys: String, CodingKey {
+        case login, id
+        case avatarURL = "avatar_url"
+    }
+}
+
+extension SearchUserResponseDTO {
+    func toEntity() -> SearchData {
+        return .init(total: totalCount,
+                     searchItems: items.map { $0.toEntity() })
+    }
+}
+
+extension Item {
+    func toEntity() -> SearchItem {
+        return .init(userName: login,
+                     userImage: avatarURL,
+                     userID: id,
+                     isFavorite: false)
+    }
+}
