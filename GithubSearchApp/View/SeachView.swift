@@ -46,6 +46,10 @@ final class SearchView: UIView, ViewRepresentable {
         label.textColor = .black
         return label
     }()
+    let indicatorView: IndicatorView = {
+        let indicatorView = IndicatorView()
+        return indicatorView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -62,6 +66,7 @@ final class SearchView: UIView, ViewRepresentable {
         addSubview(tapStackView)
         addSubview(searchBar)
         addSubview(searchTableView)
+        addSubview(indicatorView)
 
         tapStackView.addArrangedSubview(apiButton)
         tapStackView.addArrangedSubview(localButton)
@@ -81,6 +86,10 @@ final class SearchView: UIView, ViewRepresentable {
         searchTableView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
+        }
+        indicatorView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.width.height.equalTo(50)
         }
     }
 }

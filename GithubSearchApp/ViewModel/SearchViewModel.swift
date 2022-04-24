@@ -28,6 +28,7 @@ final class SearchViewModel: ViewModelType {
         let didLoadLocalUserList: Driver<[SearchItem]>
         // Common
         let didPressFavoriteButton: Signal<Int>
+        let noResultAction: Driver<Bool>
         let failToastAction: Signal<String>
         let indicatorActin: Driver<Bool>
     }
@@ -38,6 +39,7 @@ final class SearchViewModel: ViewModelType {
     private let didLoadLocalUserList = BehaviorRelay<[SearchItem]>(value: [])
     // Common
     private let didPressFavoriteButton = PublishRelay<Int>()
+    private let noResultAction = BehaviorRelay<Bool>(value: false)
     private let failToastAction = PublishRelay<String>()
     private let indicatorAction = BehaviorRelay<Bool>(value: false)
 
@@ -50,12 +52,14 @@ final class SearchViewModel: ViewModelType {
         input.requestUserListEvent
             .emit { [weak self] query in
                 guard let self = self else { return }
+                self.indicatorAction.accept(true)
                 self.totalSearchItem.removeAll()
                 self.requestSearchUser(query: query) { response in
                     switch response {
                     case .success(let data):
                         self.appendData(searchItem: data.searchItems)
                         self.didLoadUserList.accept(self.totalSearchItem)
+                        self.indicatorAction.accept(false)
                     case .failure(let error):
                         self.failToastAction.accept(error.errorDescription ?? "Error")
                     }
@@ -67,6 +71,7 @@ final class SearchViewModel: ViewModelType {
             didLoadUserList: didLoadUserList.asDriver(),
             didLoadLocalUserList: didLoadLocalUserList.asDriver(),
             didPressFavoriteButton: didPressFavoriteButton.asSignal(),
+            noResultAction: noResultAction.asDriver(),
             failToastAction: failToastAction.asSignal(),
             indicatorActin: indicatorAction.asDriver()
         )

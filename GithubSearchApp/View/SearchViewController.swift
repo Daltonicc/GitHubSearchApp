@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import Toast
 
 class SearchViewController: UIViewController {
 
@@ -55,6 +56,7 @@ class SearchViewController: UIViewController {
         mainView.searchBar.searchTextField.delegate = self
 
         mainView.searchTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        mainView.searchTableView.isUserInteractionEnabled = true
         mainView.searchTableView.rowHeight = 100
     }
 
@@ -66,6 +68,22 @@ class SearchViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
+        output.indicatorActin
+            .drive { [weak self] bool in
+                guard let self = self else { return }
+                self.indicatorAction(bool: bool)
+            }
+            .disposed(by: disposeBag)
+    }
+
+    private func indicatorAction(bool: Bool) {
+        if bool {
+            mainView.indicatorView.isHidden = false
+            mainView.indicatorView.indicatorView.startAnimating()
+        } else {
+            mainView.indicatorView.isHidden = true
+            mainView.indicatorView.indicatorView.stopAnimating()
+        }
     }
 
     @objc private func apiButtonTap() {
