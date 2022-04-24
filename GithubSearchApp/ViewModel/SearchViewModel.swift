@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import RealmSwift
 
 final class SearchViewModel: ViewModelType {
 
@@ -51,6 +52,10 @@ final class SearchViewModel: ViewModelType {
 
     var totalSearchItem: [SearchItem] = []
 
+    private var favoriteUserList: Results<FavoriteUserList>! {
+        return RealmManager.shared.loadListData()
+    }
+
     func transform(input: Input) -> Output {
 
         input.requestUserListEvent
@@ -91,7 +96,7 @@ final class SearchViewModel: ViewModelType {
                 }
             }
             .disposed(by: disposeBag)
-        
+
         return Output(
             didLoadUserList: didLoadUserList.asDriver(),
             didLoadLocalUserList: didLoadLocalUserList.asDriver(),
