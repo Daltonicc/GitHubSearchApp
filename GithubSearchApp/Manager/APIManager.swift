@@ -14,10 +14,10 @@ final class APIManager {
 
     private init() {}
 
-    func requestSearchUser(query: String, completion: @escaping (Result<SearchData, SearchError>) -> Void) {
+    func requestSearchUser(parameter: [String: Any], completion: @escaping (Result<SearchData, SearchError>) -> Void) {
 
         let provider = MoyaProvider<GitHubSearchAPI>()
-        provider.request(.searchUser(query: query)) { (result) in
+        provider.request(.searchUser(parameter: parameter)) { (result) in
             switch result {
             case let .success(response):
                 guard let data = try? response.map(SearchUserResponseDTO.self).toEntity() else { return }
