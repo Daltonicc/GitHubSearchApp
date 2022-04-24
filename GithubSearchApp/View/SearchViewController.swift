@@ -15,19 +15,25 @@ class SearchViewController: UIViewController {
     private lazy var input = SearchViewModel.Input(
         requestUserListEvent: requestUserListEvent.asSignal(),
         requestNextPageListEvent: requestNextPageListEvent.asSignal(),
+        apiTabPressEvent: apiTabPressEvent.asSignal(),
         searchFavoriteUserListEvent: searchFavoriteUserListEvent.asSignal(),
+        localTabPressEvent: localTabPressEvent.asSignal(),
         pressFavoriteButtonEvent: pressFavoriteButtonEvent.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
 
     private let requestUserListEvent = PublishRelay<String>()
     private let requestNextPageListEvent = PublishRelay<String>()
+    private let apiTabPressEvent = PublishRelay<Void>()
     private let searchFavoriteUserListEvent = PublishRelay<String>()
+    private let localTabPressEvent = PublishRelay<Void>()
     private let pressFavoriteButtonEvent = PublishRelay<Int>()
 
     private let mainView = SearchView()
     private var viewModel = SearchViewModel()
     private let disposeBag = DisposeBag()
+
+    private var tabStyle: TapButtonStyle = .apiStyle
 
     override func loadView() {
         self.view = mainView
@@ -56,7 +62,7 @@ class SearchViewController: UIViewController {
         mainView.searchBar.searchTextField.delegate = self
 
         mainView.searchTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
-        mainView.searchTableView.isUserInteractionEnabled = true
+        mainView.searchTableView.keyboardDismissMode = .onDrag
         mainView.searchTableView.rowHeight = 100
     }
 
@@ -66,7 +72,13 @@ class SearchViewController: UIViewController {
             .drive(mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
                 cell.cellConfig(searchItem: element, row: row)
                 cell.delegate = self
-                self.requestNextPage(row: row, element: self.viewModel.totalSearchItem)
+
+                switch self.tabStyle {
+                case .apiStyle:
+                    self.requestNextPage(row: row, element: self.viewModel.totalSearchItem)
+                case .localStyle:
+                    print("Local Cell")
+                }
             }
             .disposed(by: disposeBag)
 
@@ -116,22 +128,35 @@ class SearchViewController: UIViewController {
 
     @objc private func apiButtonTap() {
         guard mainView.apiButton.status == .deselected else { return }
+
+        tabStyle = .apiStyle
         mainView.noResultView.style = .apiStyle
+
         mainView.apiButton.status = .selected
         mainView.localButton.status = .deselected
+        apiTabPressEvent.accept(())
     }
 
     @objc private func localButtonTap() {
         guard mainView.localButton.status == .deselected else { return }
+
+        tabStyle = .localStyle
         mainView.noResultView.style = .localStyle
+
         mainView.apiButton.status = .deselected
         mainView.localButton.status = .selected
+        localTabPressEvent.accept(())
     }
 }
 
 extension SearchViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        requestUserList()
+        switch tabStyle {
+        case .apiStyle:
+            requestUserList()
+        case .localStyle:
+            print("Local textField Return")
+        }
         textField.resignFirstResponder()
         return true
     }
@@ -139,6 +164,11 @@ extension SearchViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
 
 extension SearchViewController: SearchTableViewCellDelegate {
     func didTapFavoriteButton(row: Int) {
-        pressFavoriteButtonEvent.accept(row)
+        switch tabStyle {
+        case .apiStyle:
+            pressFavoriteButtonEvent.accept(row)
+        case .localStyle:
+            print("Local Tap")
+        }
     }
 }

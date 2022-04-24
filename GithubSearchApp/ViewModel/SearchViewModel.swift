@@ -16,18 +16,16 @@ final class SearchViewModel: ViewModelType {
         // API Tab
         let requestUserListEvent: Signal<String>
         let requestNextPageListEvent: Signal<String>
+        let apiTabPressEvent: Signal<Void>
         // Local Tab
         let searchFavoriteUserListEvent: Signal<String>
+        let localTabPressEvent: Signal<Void>
         // common
         let pressFavoriteButtonEvent: Signal<Int>
     }
 
     struct Output {
-        // API Tab
         let didLoadUserList: Driver<[SearchItem]>
-        // Local Tab
-        let didLoadLocalUserList: Driver<[SearchItem]>
-        // Common
         let didPressFavoriteButton: Signal<Int>
         let noResultAction: Driver<Bool>
         let failToastAction: Signal<String>
@@ -36,9 +34,6 @@ final class SearchViewModel: ViewModelType {
 
     // API Tab
     private let didLoadUserList = BehaviorRelay<[SearchItem]>(value: [])
-    // Local Tab
-    private let didLoadLocalUserList = BehaviorRelay<[SearchItem]>(value: [])
-    // Common
     private let didPressFavoriteButton = PublishRelay<Int>()
     private let noResultAction = BehaviorRelay<Bool>(value: false)
     private let failToastAction = PublishRelay<String>()
@@ -51,6 +46,7 @@ final class SearchViewModel: ViewModelType {
     private var page = 1
 
     var totalSearchItem: [SearchItem] = []
+    var favoriteSearchItem: [SearchItem] = []
 
     private var favoriteUserList: Results<FavoriteUserList>! {
         return RealmManager.shared.loadListData()
@@ -95,6 +91,22 @@ final class SearchViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
+        input.apiTabPressEvent
+            .emit { [weak self] _ in
+                guard let self = self else { return }
+                self.didLoadUserList.accept(self.totalSearchItem)
+            }
+            .disposed(by: disposeBag)
+
+        input.localTabPressEvent
+            .emit { [weak self] _ in
+                guard let self = self else { return }
+                self.getFavoriteUserData()
+                self.noResultAction.accept(self.checkNoResult(searchItem: self.favoriteSearchItem))
+                self.didLoadUserList.accept(self.favoriteSearchItem)
+            }
+            .disposed(by: disposeBag)
+
         input.pressFavoriteButtonEvent
             .emit { [weak self] row in
                 guard let self = self else { return }
@@ -106,7 +118,6 @@ final class SearchViewModel: ViewModelType {
 
         return Output(
             didLoadUserList: didLoadUserList.asDriver(),
-            didLoadLocalUserList: didLoadLocalUserList.asDriver(),
             didPressFavoriteButton: didPressFavoriteButton.asSignal(),
             noResultAction: noResultAction.asDriver(),
             failToastAction: failToastAction.asSignal(),
@@ -139,6 +150,17 @@ extension SearchViewModel {
             APIManager.shared.requestSearchUser(parameter: parameter, completion: completion)
         } else {
             return
+        }
+    }
+
+    private func getFavoriteUserData() {
+        favoriteSearchItem.removeAll()
+        for i in 0..<favoriteUserList.count {
+            let data = SearchItem(userName: favoriteUserList[i].userName,
+                                  userImage: favoriteUserList[i].userProfileImage,
+                                  userID: favoriteUserList[i].userId,
+                                  isFavorite: favoriteUserList[i].isFavorite)
+            favoriteSearchItem.append(data)
         }
     }
 
