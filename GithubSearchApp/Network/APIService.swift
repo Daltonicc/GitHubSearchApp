@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum GitHubSearchAPI {
-    case searchUser(query: String)
+    case searchUser(parameter: [String: Any])
 }
 
 extension GitHubSearchAPI: TargetType {
@@ -20,7 +20,7 @@ extension GitHubSearchAPI: TargetType {
 
     var path: String {
         switch self {
-        case .searchUser(let query): return "/search/users?q=\(query)"
+        case .searchUser: return "/search/users"
         }
     }
 
@@ -32,7 +32,7 @@ extension GitHubSearchAPI: TargetType {
 
     var task: Task {
         switch self {
-        case .searchUser: return .requestPlain
+        case .searchUser(let parameter): return .requestParameters(parameters: parameter, encoding: URLEncoding.queryString)
         }
     }
 
