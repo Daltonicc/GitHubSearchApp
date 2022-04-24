@@ -74,6 +74,13 @@ class SearchViewController: UIViewController {
                 self.indicatorAction(bool: bool)
             }
             .disposed(by: disposeBag)
+
+        output.failToastAction
+            .emit { [weak self] errorMessage in
+                guard let self = self else { return }
+                self.mainView.makeToast(errorMessage)
+            }
+            .disposed(by: disposeBag)
     }
 
     private func indicatorAction(bool: Bool) {
