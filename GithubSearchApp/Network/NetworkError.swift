@@ -13,7 +13,7 @@ enum SearchError: Int, Error {
 }
 
 extension SearchError: LocalizedError {
-    var errorDescription: String? {
+    private var errorDescription: String {
         switch self {
         case .validationFailed: return "검색이 유효하지 않습니다"
         case .serviceError: return "서버 오류로 시도할 수 없습니다"
