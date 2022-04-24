@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct SearchData {
+struct UserData {
     let total: Int
-    let searchItems: [SearchItem]
+    let userItems: [UserItem]
 }
 
-struct SearchItem {
+struct UserItem {
     let userName: String
     let userImage: String
     let userID: String

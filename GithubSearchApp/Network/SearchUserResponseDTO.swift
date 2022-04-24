@@ -30,14 +30,14 @@ struct Item: Codable {
 }
 
 extension SearchUserResponseDTO {
-    func toEntity() -> SearchData {
+    func toEntity() -> UserData {
         return .init(total: totalCount,
-                     searchItems: items.map { $0.toEntity() })
+                     userItems: items.map { $0.toEntity() })
     }
 }
 
 extension Item {
-    func toEntity() -> SearchItem {
+    func toEntity() -> UserItem {
         return .init(userName: login,
                      userImage: avatarURL,
                      userID: "\(id)",

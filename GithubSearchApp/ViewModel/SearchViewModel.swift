@@ -25,7 +25,7 @@ final class SearchViewModel: ViewModelType {
     }
 
     struct Output {
-        let didLoadUserList: Driver<[SearchItem]>
+        let didLoadUserList: Driver<[UserItem]>
         let didPressFavoriteButton: Signal<Int>
         let noResultAction: Driver<Bool>
         let failToastAction: Signal<String>
@@ -33,7 +33,7 @@ final class SearchViewModel: ViewModelType {
     }
 
     // API Tab
-    private let didLoadUserList = BehaviorRelay<[SearchItem]>(value: [])
+    private let didLoadUserList = BehaviorRelay<[UserItem]>(value: [])
     private let didPressFavoriteButton = PublishRelay<Int>()
     private let noResultAction = BehaviorRelay<Bool>(value: false)
     private let failToastAction = PublishRelay<String>()
@@ -45,8 +45,8 @@ final class SearchViewModel: ViewModelType {
     private var perPage = 30
     private var page = 1
 
-    var totalSearchItem: [SearchItem] = []
-    var favoriteSearchItem: [SearchItem] = []
+    var totalSearchItem: [UserItem] = []
+    var favoriteSearchItem: [UserItem] = []
 
     private var favoriteUserList: Results<FavoriteUserList>! {
         return RealmManager.shared.loadListData()
@@ -62,10 +62,10 @@ final class SearchViewModel: ViewModelType {
                     switch response {
                     case .success(let data):
                         self.total = data.total
-                        self.appendData(searchItem: data.searchItems)
+                        self.appendData(searchItem: data.userItems)
                         self.checkIsFavoriteStatus()
                         self.didLoadUserList.accept(self.totalSearchItem)
-                        self.noResultAction.accept(self.checkNoResult(searchItem: data.searchItems))
+                        self.noResultAction.accept(self.checkNoResult(searchItem: data.userItems))
                         self.indicatorAction.accept(false)
                     case .failure(let error):
                         self.failToastAction.accept(error.errorDescription ?? "Error")
@@ -81,7 +81,7 @@ final class SearchViewModel: ViewModelType {
                 self.getNextPageMovieData(query: query) { response in
                     switch response {
                     case .success(let data):
-                        self.appendData(searchItem: data.searchItems)
+                        self.appendData(searchItem: data.userItems)
                         self.checkIsFavoriteStatus()
                         self.didLoadUserList.accept(self.totalSearchItem)
                     case .failure(let error):
@@ -128,7 +128,7 @@ final class SearchViewModel: ViewModelType {
 
 extension SearchViewModel {
 
-    private func requestSearchUser(query: String, completion: @escaping (Result<SearchData, SearchError>) -> Void) {
+    private func requestSearchUser(query: String, completion: @escaping (Result<UserData, SearchError>) -> Void) {
         totalSearchItem.removeAll()
         page = 1
         let parameter = [
@@ -139,7 +139,7 @@ extension SearchViewModel {
         APIManager.shared.requestSearchUser(parameter: parameter, completion: completion)
     }
 
-    private func getNextPageMovieData(query: String, completion: @escaping (Result<SearchData, SearchError>) -> Void) {
+    private func getNextPageMovieData(query: String, completion: @escaping (Result<UserData, SearchError>) -> Void) {
         page += 1
         let parameter = [
             "q": "\(query)",
@@ -156,7 +156,7 @@ extension SearchViewModel {
     private func getFavoriteUserData() {
         favoriteSearchItem.removeAll()
         for i in 0..<favoriteUserList.count {
-            let data = SearchItem(userName: favoriteUserList[i].userName,
+            let data = UserItem(userName: favoriteUserList[i].userName,
                                   userImage: favoriteUserList[i].userProfileImage,
                                   userID: favoriteUserList[i].userId,
                                   isFavorite: favoriteUserList[i].isFavorite)
@@ -187,7 +187,7 @@ extension SearchViewModel {
         }
     }
 
-    private func checkNoResult(searchItem: [SearchItem]) -> Bool {
+    private func checkNoResult(searchItem: [UserItem]) -> Bool {
         if searchItem.count == 0 {
             return false
         } else {
@@ -195,13 +195,13 @@ extension SearchViewModel {
         }
     }
 
-    private func appendData(searchItem: [SearchItem]) {
+    private func appendData(searchItem: [UserItem]) {
         for i in searchItem {
             totalSearchItem.append(i)
         }
     }
 
-    private func addToDataBase(searchItem: SearchItem) {
+    private func addToDataBase(searchItem: UserItem) {
         let task = FavoriteUserList(userName: searchItem.userName,
                                     userId: searchItem.userID,
                                     userProfileImage: searchItem.userImage,

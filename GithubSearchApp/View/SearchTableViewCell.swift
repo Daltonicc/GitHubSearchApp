@@ -86,7 +86,7 @@ final class SearchTableViewCell: UITableViewCell {
         }
     }
 
-    func cellConfig(searchItem: SearchItem, row: Int) {
+    func cellConfig(searchItem: UserItem, row: Int) {
 
         if let imageURL = URL(string: searchItem.userImage) {
             userImageView.kf.setImage(with: imageURL)

@@ -40,7 +40,7 @@
 		6A39D90028144BE6004B444E /* SearchUserResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8FF28144BE6004B444E /* SearchUserResponseDTO.swift */; };
 		6A39D90228144F52004B444E /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D90128144F52004B444E /* APIKey.swift */; };
 		6A39D904281452DA004B444E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D903281452DA004B444E /* NetworkError.swift */; };
-		6A39D906281454BB004B444E /* SearchData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D905281454BB004B444E /* SearchData.swift */; };
+		6A39D906281454BB004B444E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D905281454BB004B444E /* UserData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,7 +90,7 @@
 		6A39D8FF28144BE6004B444E /* SearchUserResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserResponseDTO.swift; sourceTree = "<group>"; };
 		6A39D90128144F52004B444E /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		6A39D903281452DA004B444E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
-		6A39D905281454BB004B444E /* SearchData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchData.swift; sourceTree = "<group>"; };
+		6A39D905281454BB004B444E /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,7 +219,7 @@
 		6A39D8D42813BE88004B444E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				6A39D905281454BB004B444E /* SearchData.swift */,
+				6A39D905281454BB004B444E /* UserData.swift */,
 				6A3650E528155FCA00BE71C7 /* RealmModel.swift */,
 			);
 			path = Model;
@@ -471,7 +471,7 @@
 				6A39D8FE281433BB004B444E /* UITableViewController+Extension.swift in Sources */,
 				6A39D8F12813C430004B444E /* ViewRepresentable.swift in Sources */,
 				6A39D90228144F52004B444E /* APIKey.swift in Sources */,
-				6A39D906281454BB004B444E /* SearchData.swift in Sources */,
+				6A39D906281454BB004B444E /* UserData.swift in Sources */,
 				6A39D8FB28143352004B444E /* SearchTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,7 @@ final class APIManager {
 
     private init() {}
 
-    func requestSearchUser(parameter: [String: Any], completion: @escaping (Result<SearchData, SearchError>) -> Void) {
+    func requestSearchUser(parameter: [String: Any], completion: @escaping (Result<UserData, SearchError>) -> Void) {
 
         let provider = MoyaProvider<GitHubSearchAPI>()
         provider.request(.searchUser(parameter: parameter)) { (result) in

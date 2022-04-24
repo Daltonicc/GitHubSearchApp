@@ -109,7 +109,7 @@ class SearchViewController: UIViewController {
         requestUserListEvent.accept(query)
     }
 
-    private func requestNextPage(row: Int, element: [SearchItem]) {
+    private func requestNextPage(row: Int, element: [UserItem]) {
         if row == element.count - 1 {
             guard let query = mainView.searchBar.searchTextField.text else { return }
             requestNextPageListEvent.accept(query)
