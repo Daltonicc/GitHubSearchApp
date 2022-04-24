@@ -38,7 +38,18 @@ final class RealmManager {
                 localRealm.delete(task)
             }
         } catch {
-            fatalError("Realm Save Error")
+            fatalError("Realm Delete Error")
         }
+    }
+
+    func deleteObjectData(object: FavoriteUserList) {
+        do {
+            try localRealm.write {
+                localRealm.delete(object)
+            }
+        } catch {
+            fatalError("Realm Delete Error")
+        }
+
     }
 }
