@@ -11,13 +11,13 @@ import RealmSwift
 final class FavoriteUserList: Object {
 
     @Persisted var userName: String
-    @Persisted var userId: Int
+    @Persisted var userId: String
     @Persisted var userProfileImage: String
     @Persisted var isFavorite: Bool
 
     @Persisted(primaryKey: true) var _id: ObjectId
 
-    convenience init(userName: String, userId: Int, userProfileImage: String, isFavorite: Bool) {
+    convenience init(userName: String, userId: String, userProfileImage: String, isFavorite: Bool) {
         self.init()
 
         self.userName = userName

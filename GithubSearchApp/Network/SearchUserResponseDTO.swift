@@ -40,7 +40,7 @@ extension Item {
     func toEntity() -> SearchItem {
         return .init(userName: login,
                      userImage: avatarURL,
-                     userID: id,
+                     userID: "\(id)",
                      isFavorite: false)
     }
 }

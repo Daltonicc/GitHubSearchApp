@@ -15,6 +15,6 @@ struct SearchData {
 struct SearchItem {
     let userName: String
     let userImage: String
-    let userID: Int
+    let userID: String
     var isFavorite: Bool
 }
