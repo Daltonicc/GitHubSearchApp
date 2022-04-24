@@ -8,27 +8,24 @@
 import UIKit
 import SnapKit
 
+enum TapButtonStyle {
+    case apiStyle
+    case localStyle
+}
+
+enum TapButtonStatus {
+    case selected
+    case deselected
+}
+
 final class TapButton: UIView, ViewRepresentable {
-
-    enum TapButtonStyle {
-        case apiStyle
-        case localStyle
-    }
-
-    enum TapButtonStatus {
-        case selected
-        case deselected
-    }
 
     let tapButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
         return button
     }()
-    let bottomBar: UIView = {
-        let view = UIView()
-        return view
-    }()
+    let bottomBar = UIView()
 
     var status: TapButtonStatus = .selected {
         didSet {

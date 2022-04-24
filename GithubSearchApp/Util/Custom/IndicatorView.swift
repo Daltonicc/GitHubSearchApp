@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class IndicatorView: UIView {
+final class IndicatorView: UIView, ViewRepresentable {
 
     let indicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
