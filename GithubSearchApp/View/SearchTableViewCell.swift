@@ -14,7 +14,8 @@ final class SearchTableViewCell: UITableViewCell {
     let userImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "circle")
-        imageView.layer.cornerRadius = 15
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 40
         return imageView
     }()
     let userNameLabel: UILabel = {
@@ -22,6 +23,7 @@ final class SearchTableViewCell: UITableViewCell {
         label.text = "홍길동"
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 20)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     let favoriteButton: UIButton = {
@@ -33,6 +35,8 @@ final class SearchTableViewCell: UITableViewCell {
         button.contentHorizontalAlignment = .fill
         return button
     }()
+
+    var isFavorite = false
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -49,7 +53,9 @@ final class SearchTableViewCell: UITableViewCell {
 
         addSubview(userImageView)
         addSubview(userNameLabel)
-        addSubview(favoriteButton)
+        contentView.addSubview(favoriteButton)
+
+        favoriteButton.addTarget(self, action: #selector(favoriteButtonTap(sender:)), for: .touchUpInside)
     }
 
     private func setUpConstraints() {
@@ -61,7 +67,7 @@ final class SearchTableViewCell: UITableViewCell {
             make.width.equalTo(80)
         }
         userNameLabel.snp.makeConstraints { make in
-            make.leading.equalTo(userImageView.snp.trailing).offset(5)
+            make.leading.equalTo(userImageView.snp.trailing).offset(20)
             make.center.equalToSuperview()
         }
         favoriteButton.snp.makeConstraints { make in
@@ -79,7 +85,16 @@ final class SearchTableViewCell: UITableViewCell {
         } else {
             userImageView.image = UIImage(systemName: "star")
         }
+        isFavorite = searchItem.isFavorite
         userNameLabel.text = searchItem.userName
         favoriteButton.tintColor = searchItem.isFavorite ? .systemYellow : .systemGray3
+    }
+
+    @objc private func favoriteButtonTap(sender: UIButton) {
+        addPressAnimationToButton(scale: 0.85, favoriteButton) { [weak self] _ in
+            guard let self = self else { return }
+            self.isFavorite.toggle()
+            self.favoriteButton.tintColor = self.isFavorite ? .systemYellow : .systemGray3
+        }
     }
 }
