@@ -40,12 +40,6 @@ final class SearchView: UIView, ViewRepresentable {
         let tableView = UITableView()
         return tableView
     }()
-    let testLabel: UILabel = {
-        let label = UILabel()
-        label.text = "123123123"
-        label.textColor = .black
-        return label
-    }()
     let indicatorView: IndicatorView = {
         let indicatorView = IndicatorView()
         return indicatorView
