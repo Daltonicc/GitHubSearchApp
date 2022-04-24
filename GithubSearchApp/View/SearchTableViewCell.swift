@@ -9,6 +9,10 @@ import UIKit
 import SnapKit
 import Kingfisher
 
+protocol SearchTableViewCellDelegate: AnyObject {
+    func didTapFavoriteButton(row: Int)
+}
+
 final class SearchTableViewCell: UITableViewCell {
 
     let userImageView: UIImageView = {
@@ -16,6 +20,8 @@ final class SearchTableViewCell: UITableViewCell {
         imageView.image = UIImage(systemName: "circle")
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 40
+        imageView.layer.borderColor = UIColor.black.cgColor
+        imageView.layer.borderWidth = 1
         return imageView
     }()
     let userNameLabel: UILabel = {
@@ -35,6 +41,8 @@ final class SearchTableViewCell: UITableViewCell {
         button.contentHorizontalAlignment = .fill
         return button
     }()
+
+    weak var delegate: SearchTableViewCellDelegate?
 
     var isFavorite = false
 
@@ -78,7 +86,7 @@ final class SearchTableViewCell: UITableViewCell {
         }
     }
 
-    func cellConfig(searchItem: SearchItem) {
+    func cellConfig(searchItem: SearchItem, row: Int) {
 
         if let imageURL = URL(string: searchItem.userImage) {
             userImageView.kf.setImage(with: imageURL)
@@ -88,6 +96,7 @@ final class SearchTableViewCell: UITableViewCell {
         isFavorite = searchItem.isFavorite
         userNameLabel.text = searchItem.userName
         favoriteButton.tintColor = searchItem.isFavorite ? .systemYellow : .systemGray3
+        favoriteButton.tag = row
     }
 
     @objc private func favoriteButtonTap(sender: UIButton) {
@@ -95,6 +104,7 @@ final class SearchTableViewCell: UITableViewCell {
             guard let self = self else { return }
             self.isFavorite.toggle()
             self.favoriteButton.tintColor = self.isFavorite ? .systemYellow : .systemGray3
+            self.delegate?.didTapFavoriteButton(row: sender.tag)
         }
     }
 }

@@ -64,7 +64,8 @@ class SearchViewController: UIViewController {
 
         output.didLoadUserList
             .drive(mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
-                cell.cellConfig(searchItem: element)
+                cell.cellConfig(searchItem: element, row: row)
+                cell.delegate = self
                 self.requestNextPage(row: row, element: self.viewModel.totalSearchItem)
             }
             .disposed(by: disposeBag)
@@ -91,6 +92,11 @@ class SearchViewController: UIViewController {
             .disposed(by: disposeBag)
     }
 
+    private func requestUserList() {
+        guard let query = mainView.searchBar.searchTextField.text else { return }
+        requestUserListEvent.accept(query)
+    }
+
     private func requestNextPage(row: Int, element: [SearchItem]) {
         if row == element.count - 1 {
             guard let query = mainView.searchBar.searchTextField.text else { return }
@@ -110,14 +116,14 @@ class SearchViewController: UIViewController {
 
     @objc private func apiButtonTap() {
         guard mainView.apiButton.status == .deselected else { return }
-
+        mainView.noResultView.style = .apiStyle
         mainView.apiButton.status = .selected
         mainView.localButton.status = .deselected
     }
 
     @objc private func localButtonTap() {
         guard mainView.localButton.status == .deselected else { return }
-
+        mainView.noResultView.style = .localStyle
         mainView.apiButton.status = .deselected
         mainView.localButton.status = .selected
     }
@@ -125,9 +131,14 @@ class SearchViewController: UIViewController {
 
 extension SearchViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let query = mainView.searchBar.searchTextField.text else { return true }
-        requestUserListEvent.accept(query)
+        requestUserList()
         textField.resignFirstResponder()
         return true
+    }
+}
+
+extension SearchViewController: SearchTableViewCellDelegate {
+    func didTapFavoriteButton(row: Int) {
+        pressFavoriteButtonEvent.accept(row)
     }
 }
