@@ -22,28 +22,21 @@ final class SearchView: UIView, ViewRepresentable {
         stackView.distribution = .fillEqually
         return stackView
     }()
-    let apiButton: TapButton = {
-        let button = TapButton(style: .apiStyle, status: .selected)
-        return button
-    }()
-    let localButton: TapButton = {
-        let button = TapButton(style: .localStyle, status: .deselected)
-        return button
-    }()
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "검색어를 입력하세요"
         searchBar.searchBarStyle = .minimal
         return searchBar
     }()
-    let searchTableView: UITableView = {
-        let tableView = UITableView()
-        return tableView
+    let noResultView: NoResultView = {
+        let view = NoResultView()
+        view.isHidden = true
+        return view
     }()
-    let indicatorView: IndicatorView = {
-        let indicatorView = IndicatorView()
-        return indicatorView
-    }()
+    let searchTableView = UITableView()
+    let indicatorView = IndicatorView()
+    let apiButton = TapButton(style: .apiStyle, status: .selected)
+    let localButton = TapButton(style: .localStyle, status: .deselected)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,6 +54,7 @@ final class SearchView: UIView, ViewRepresentable {
         addSubview(searchBar)
         addSubview(searchTableView)
         addSubview(indicatorView)
+        addSubview(noResultView)
 
         tapStackView.addArrangedSubview(apiButton)
         tapStackView.addArrangedSubview(localButton)
@@ -84,6 +78,9 @@ final class SearchView: UIView, ViewRepresentable {
         indicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.width.height.equalTo(50)
+        }
+        noResultView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
         }
     }
 }

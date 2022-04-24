@@ -69,6 +69,13 @@ class SearchViewController: UIViewController {
             }
             .disposed(by: disposeBag)
 
+        output.noResultAction
+            .drive { [weak self] bool in
+                guard let self = self else { return }
+                self.mainView.noResultView.isHidden = bool
+            }
+            .disposed(by: disposeBag)
+
         output.indicatorActin
             .drive { [weak self] bool in
                 guard let self = self else { return }
