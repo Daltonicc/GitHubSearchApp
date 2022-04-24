@@ -45,6 +45,10 @@ final class SearchViewModel: ViewModelType {
 
     var disposeBag = DisposeBag()
 
+    private var total = 0
+    private var perPage = 30
+    private var page = 1
+
     var totalSearchItem: [SearchItem] = []
 
     func transform(input: Input) -> Output {
@@ -57,11 +61,32 @@ final class SearchViewModel: ViewModelType {
                 self.requestSearchUser(query: query) { response in
                     switch response {
                     case .success(let data):
+                        self.total = data.total
+                        self.appendData(searchItem: data.searchItems)
+                        self.didLoadUserList.accept(self.totalSearchItem)
+                        self.noResultAction.accept(self.checkNoResult(searchItem: data.searchItems))
+                        self.indicatorAction.accept(false)
+                    case .failure(let error):
+                        self.failToastAction.accept(error.errorDescription ?? "Error")
+                        self.indicatorAction.accept(false)
+                    }
+                }
+            }
+            .disposed(by: disposeBag)
+
+        input.requestNextPageListEvent
+            .emit { [weak self] query in
+                guard let self = self else { return }
+                self.getNextPageMovieData(query: query) { response in
+                    self.indicatorAction.accept(true)
+                    switch response {
+                    case .success(let data):
                         self.appendData(searchItem: data.searchItems)
                         self.didLoadUserList.accept(self.totalSearchItem)
                         self.indicatorAction.accept(false)
                     case .failure(let error):
                         self.failToastAction.accept(error.errorDescription ?? "Error")
+                        self.indicatorAction.accept(false)
                     }
                 }
             }
@@ -81,12 +106,35 @@ final class SearchViewModel: ViewModelType {
 extension SearchViewModel {
 
     private func requestSearchUser(query: String, completion: @escaping (Result<SearchData, SearchError>) -> Void) {
-
+        page = 1
         let parameter = [
-            "q": "\(query)"
+            "q": "\(query)",
+            "per_page": "\(perPage)",
+            "page": "\(page)"
         ]
-
         APIManager.shared.requestSearchUser(parameter: parameter, completion: completion)
+    }
+
+    private func getNextPageMovieData(query: String, completion: @escaping (Result<SearchData, SearchError>) -> Void) {
+        page += 1
+        let parameter = [
+            "q": "\(query)",
+            "per_page": "\(perPage)",
+            "page": "\(page)"
+        ]
+        if perPage * page <= total {
+            APIManager.shared.requestSearchUser(parameter: parameter, completion: completion)
+        } else {
+            return
+        }
+    }
+
+    private func checkNoResult(searchItem: [SearchItem]) -> Bool {
+        if searchItem.count == 0 {
+            return false
+        } else {
+            return true
+        }
     }
 
     private func appendData(searchItem: [SearchItem]) {

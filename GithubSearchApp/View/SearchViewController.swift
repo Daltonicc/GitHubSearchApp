@@ -65,6 +65,7 @@ class SearchViewController: UIViewController {
         output.didLoadUserList
             .drive(mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
                 cell.cellConfig(searchItem: element)
+                self.requestNextPage(row: row, element: self.viewModel.totalSearchItem)
             }
             .disposed(by: disposeBag)
 
@@ -81,6 +82,13 @@ class SearchViewController: UIViewController {
                 self.mainView.makeToast(errorMessage)
             }
             .disposed(by: disposeBag)
+    }
+
+    private func requestNextPage(row: Int, element: [SearchItem]) {
+        if row == element.count - 1 {
+            guard let query = mainView.searchBar.searchTextField.text else { return }
+            requestNextPageListEvent.accept(query)
+        }
     }
 
     private func indicatorAction(bool: Bool) {
