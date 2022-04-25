@@ -34,8 +34,6 @@ class APIViewController: UIViewController {
     private var viewModel = APIViewModel()
     private let disposeBag = DisposeBag()
 
-    private var tabStyle: TapButtonStyle = .apiStyle
-
     override func loadView() {
         self.view = mainView
     }
@@ -45,19 +43,11 @@ class APIViewController: UIViewController {
 
         view.backgroundColor = .white
 
-        navigationItemConfig()
         setViewConfig()
         bind()
     }
 
-    private func navigationItemConfig() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: mainView.titleLabel)
-    }
-
     private func setViewConfig() {
-
-        mainView.apiButton.tapButton.addTarget(self, action: #selector(apiButtonTap), for: .touchUpInside)
-        mainView.localButton.tapButton.addTarget(self, action: #selector(localButtonTap), for: .touchUpInside)
 
         mainView.searchBar.delegate = self
         mainView.searchBar.searchTextField.delegate = self
@@ -73,13 +63,7 @@ class APIViewController: UIViewController {
             .drive(mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
                 cell.cellConfig(searchItem: element, row: row)
                 cell.delegate = self
-
-                switch self.tabStyle {
-                case .apiStyle:
-                    self.requestNextPage(row: row, element: self.viewModel.totalSearchItem)
-                case .localStyle:
-                    print("Local Cell")
-                }
+                self.requestNextPage(row: row, element: self.viewModel.totalSearchItem)
             }
             .disposed(by: disposeBag)
 
@@ -126,38 +110,11 @@ class APIViewController: UIViewController {
             mainView.indicatorView.indicatorView.stopAnimating()
         }
     }
-
-    @objc private func apiButtonTap() {
-        guard mainView.apiButton.status == .deselected else { return }
-
-        tabStyle = .apiStyle
-        mainView.noResultView.style = .apiStyle
-
-        mainView.apiButton.status = .selected
-        mainView.localButton.status = .deselected
-        apiTabPressEvent.accept(())
-    }
-
-    @objc private func localButtonTap() {
-        guard mainView.localButton.status == .deselected else { return }
-
-        tabStyle = .localStyle
-        mainView.noResultView.style = .localStyle
-
-        mainView.apiButton.status = .deselected
-        mainView.localButton.status = .selected
-        localTabPressEvent.accept(())
-    }
 }
 
 extension APIViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch tabStyle {
-        case .apiStyle:
-            requestUserList()
-        case .localStyle:
-            print("Local textField Return")
-        }
+        requestUserList()
         textField.resignFirstResponder()
         return true
     }
@@ -165,11 +122,6 @@ extension APIViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
 
 extension APIViewController: SearchTableViewCellDelegate {
     func didTapFavoriteButton(row: Int) {
-        switch tabStyle {
-        case .apiStyle:
-            pressFavoriteButtonEvent.accept(row)
-        case .localStyle:
-            print("Local Tap")
-        }
+        pressFavoriteButtonEvent.accept(row)
     }
 }

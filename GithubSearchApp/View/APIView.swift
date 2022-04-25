@@ -10,18 +10,6 @@ import SnapKit
 
 final class APIView: UIView, ViewRepresentable {
 
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "GitHub Stars"
-        label.font = .boldSystemFont(ofSize: 30)
-        return label
-    }()
-    let tapStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        return stackView
-    }()
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "검색어를 입력하세요"
@@ -29,14 +17,12 @@ final class APIView: UIView, ViewRepresentable {
         return searchBar
     }()
     let noResultView: NoResultView = {
-        let view = NoResultView()
+        let view = NoResultView(text: "검색 결과가 없습니다.")
         view.isHidden = true
         return view
     }()
     let searchTableView = UITableView()
     let indicatorView = IndicatorView()
-    let apiButton = TapButton(style: .apiStyle, status: .selected)
-    let localButton = TapButton(style: .localStyle, status: .deselected)
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -50,25 +36,16 @@ final class APIView: UIView, ViewRepresentable {
 
     func setUpView() {
 
-        addSubview(tapStackView)
         addSubview(searchBar)
         addSubview(searchTableView)
         addSubview(indicatorView)
         addSubview(noResultView)
-
-        tapStackView.addArrangedSubview(apiButton)
-        tapStackView.addArrangedSubview(localButton)
     }
 
     func setUpConstraint() {
 
-        tapStackView.snp.makeConstraints { make in
-            make.top.equalTo(self.safeAreaLayoutGuide)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalTo(50)
-        }
         searchBar.snp.makeConstraints { make in
-            make.top.equalTo(tapStackView.snp.bottom)
+            make.top.equalTo(self.safeAreaLayoutGuide)
             make.leading.trailing.equalToSuperview()
         }
         searchTableView.snp.makeConstraints { make in
