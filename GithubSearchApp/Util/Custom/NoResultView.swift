@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class NoResultView: UIView, ViewRepresentable {
+final class NoResultView: BaseView {
 
     let noResultLabel: UILabel = {
         let label = UILabel()
@@ -19,8 +19,6 @@ final class NoResultView: UIView, ViewRepresentable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpView()
-        setUpConstraint()
     }
 
     required init?(coder: NSCoder) {
@@ -32,12 +30,12 @@ final class NoResultView: UIView, ViewRepresentable {
         noResultLabel.text = text
     }
 
-    func setUpView() {
+    override func setUpView() {
 
         addSubview(noResultLabel)
     }
 
-    func setUpConstraint() {
+    override func setUpConstraint() {
 
         noResultLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()

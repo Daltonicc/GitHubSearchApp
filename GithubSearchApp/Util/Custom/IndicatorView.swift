@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class IndicatorView: UIView, ViewRepresentable {
+final class IndicatorView: BaseView {
 
     let indicatorView: UIActivityIndicatorView = {
         let indicatorView = UIActivityIndicatorView()
@@ -18,15 +18,13 @@ final class IndicatorView: UIView, ViewRepresentable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpView()
-        setUpConstraint()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
-    func setUpView() {
+    override func setUpView() {
 
         addSubview(indicatorView)
 
@@ -34,7 +32,7 @@ final class IndicatorView: UIView, ViewRepresentable {
         self.layer.cornerRadius = 5
     }
 
-    func setUpConstraint() {
+    override func setUpConstraint() {
 
         indicatorView.snp.makeConstraints { make in
             make.center.equalToSuperview()

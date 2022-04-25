@@ -30,6 +30,12 @@ final class HomeViewController: TabmanViewController {
         let bar = TMBar.ButtonBar()
         bar.layout.transitionStyle = .snap
         bar.layout.contentMode = .fit
+        bar.backgroundView.style = .clear
+        bar.buttons.customize { button in
+            button.tintColor = .systemGray3
+            button.selectedTintColor = .black
+        }
+        bar.indicator.tintColor = .black
 
         addBar(bar, dataSource: self, at: .top)
     }

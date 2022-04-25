@@ -11,7 +11,7 @@ import RxCocoa
 import RxDataSources
 import Toast
 
-class APIViewController: UIViewController {
+class APIViewController: BaseViewController {
 
     private lazy var input = APIViewModel.Input(
         requestUserListEvent: requestUserListEvent.asSignal(),
@@ -40,14 +40,10 @@ class APIViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .white
-
-        setViewConfig()
-        bind()
     }
 
-    private func setViewConfig() {
+    override func setViewConfig() {
+        super.setViewConfig()
 
         mainView.searchBar.delegate = self
         mainView.searchBar.searchTextField.delegate = self
@@ -57,7 +53,7 @@ class APIViewController: UIViewController {
         mainView.searchTableView.rowHeight = 100
     }
 
-    private func bind() {
+    override func bind() {
 
         output.didLoadUserList
             .drive(mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in

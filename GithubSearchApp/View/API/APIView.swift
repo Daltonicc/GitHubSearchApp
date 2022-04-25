@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class APIView: UIView, ViewRepresentable {
+final class APIView: BaseView {
 
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
@@ -26,15 +26,13 @@ final class APIView: UIView, ViewRepresentable {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpView()
-        setUpConstraint()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
-    func setUpView() {
+    override func setUpView() {
 
         addSubview(searchBar)
         addSubview(searchTableView)
@@ -42,7 +40,7 @@ final class APIView: UIView, ViewRepresentable {
         addSubview(noResultView)
     }
 
-    func setUpConstraint() {
+    override func setUpConstraint() {
 
         searchBar.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide)
