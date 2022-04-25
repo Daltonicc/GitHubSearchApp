@@ -1,15 +1,20 @@
 //
-//  SeachView.swift
+//  ContentView.swift
 //  GithubSearchApp
 //
-//  Created by 박근보 on 2022/04/23.
+//  Created by 박근보 on 2022/04/25.
 //
 
 import UIKit
 import SnapKit
 
-final class APIView: BaseView {
+final class ContentView: BaseView {
 
+    let separateView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .systemGray5
+        return view
+    }()
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "검색어를 입력하세요"
@@ -34,6 +39,7 @@ final class APIView: BaseView {
 
     override func setUpView() {
 
+        addSubview(separateView)
         addSubview(searchBar)
         addSubview(searchTableView)
         addSubview(indicatorView)
@@ -42,12 +48,17 @@ final class APIView: BaseView {
 
     override func setUpConstraint() {
 
-        searchBar.snp.makeConstraints { make in
+        separateView.snp.makeConstraints { make in
             make.top.equalTo(self.safeAreaLayoutGuide)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(2)
+        }
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(separateView.snp.bottom)
             make.leading.trailing.equalToSuperview()
         }
         searchTableView.snp.makeConstraints { make in
-            make.top.equalTo(searchBar.snp.bottom)
+            make.top.equalTo(separateView2.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
         indicatorView.snp.makeConstraints { make in
