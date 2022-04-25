@@ -59,8 +59,8 @@ final class SearchTableViewCell: UITableViewCell {
 
     private func setUpView() {
 
-        addSubview(userImageView)
-        addSubview(userNameLabel)
+        contentView.addSubview(userImageView)
+        contentView.addSubview(userNameLabel)
         contentView.addSubview(favoriteButton)
 
         favoriteButton.addTarget(self, action: #selector(favoriteButtonTap(sender:)), for: .touchUpInside)

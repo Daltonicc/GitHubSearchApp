@@ -68,7 +68,7 @@ final class TapButton: UIView, ViewRepresentable {
         }
     }
 
-    func statusChange(status: TapButtonStatus) {
+    private func statusChange(status: TapButtonStatus) {
         switch status {
         case .selected:
             tapButton.setTitleColor(.black, for: .normal)
@@ -79,7 +79,7 @@ final class TapButton: UIView, ViewRepresentable {
         }
     }
 
-    func styleConfig(style: TapButtonStyle) {
+    private func styleConfig(style: TapButtonStyle) {
         switch style {
         case .apiStyle: tapButton.setTitle("API", for: .normal)
         case .localStyle: tapButton.setTitle("Local", for: .normal)

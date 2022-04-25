@@ -10,7 +10,7 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-final class SearchViewModel: ViewModelType {
+final class APIViewModel: ViewModelType {
 
     struct Input {
         // API Tab
@@ -126,7 +126,7 @@ final class SearchViewModel: ViewModelType {
     }
 }
 
-extension SearchViewModel {
+extension APIViewModel {
 
     private func requestSearchUser(query: String, completion: @escaping (Result<UserData, SearchError>) -> Void) {
         totalSearchItem.removeAll()

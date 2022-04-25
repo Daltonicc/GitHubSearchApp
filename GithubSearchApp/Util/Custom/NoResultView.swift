@@ -40,7 +40,7 @@ final class NoResultView: UIView, ViewRepresentable {
         }
     }
 
-    func labelConfig() {
+    private func labelConfig() {
 
         noResultLabel.font = .boldSystemFont(ofSize: 25)
         noResultLabel.textColor = .systemGray3

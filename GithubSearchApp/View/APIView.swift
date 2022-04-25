@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class SearchView: UIView, ViewRepresentable {
+final class APIView: UIView, ViewRepresentable {
 
     let titleLabel: UILabel = {
         let label = UILabel()

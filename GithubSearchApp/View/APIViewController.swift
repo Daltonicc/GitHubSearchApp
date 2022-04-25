@@ -1,5 +1,5 @@
 //
-//  SearchViewController.swift
+//  APIViewController.swift
 //  GithubSearchApp
 //
 //  Created by 박근보 on 2022/04/22.
@@ -8,11 +8,12 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import RxDataSources
 import Toast
 
-class SearchViewController: UIViewController {
+class APIViewController: UIViewController {
 
-    private lazy var input = SearchViewModel.Input(
+    private lazy var input = APIViewModel.Input(
         requestUserListEvent: requestUserListEvent.asSignal(),
         requestNextPageListEvent: requestNextPageListEvent.asSignal(),
         apiTabPressEvent: apiTabPressEvent.asSignal(),
@@ -29,8 +30,8 @@ class SearchViewController: UIViewController {
     private let localTabPressEvent = PublishRelay<Void>()
     private let pressFavoriteButtonEvent = PublishRelay<Int>()
 
-    private let mainView = SearchView()
-    private var viewModel = SearchViewModel()
+    private let mainView = APIView()
+    private var viewModel = APIViewModel()
     private let disposeBag = DisposeBag()
 
     private var tabStyle: TapButtonStyle = .apiStyle
@@ -149,7 +150,7 @@ class SearchViewController: UIViewController {
     }
 }
 
-extension SearchViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
+extension APIViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch tabStyle {
         case .apiStyle:
@@ -162,7 +163,7 @@ extension SearchViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
     }
 }
 
-extension SearchViewController: SearchTableViewCellDelegate {
+extension APIViewController: SearchTableViewCellDelegate {
     func didTapFavoriteButton(row: Int) {
         switch tabStyle {
         case .apiStyle:
