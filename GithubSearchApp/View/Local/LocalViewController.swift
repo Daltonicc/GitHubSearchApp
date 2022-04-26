@@ -7,12 +7,43 @@
 
 import UIKit
 
-final class LocalViewController: UIViewController {
+final class LocalViewController: BaseViewController {
+
+    private let mainView = ContentView()
+
+    override func loadView() {
+        self.view = mainView
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
 
-        view.backgroundColor = .white
+    override func setViewConfig() {
+        super.setViewConfig()
+        
+        mainView.searchBar.delegate = self
+        mainView.searchBar.searchTextField.delegate = self
+
+        mainView.searchTableView.register(SearchTableViewCell.self, forCellReuseIdentifier: SearchTableViewCell.identifier)
+        mainView.searchTableView.keyboardDismissMode = .onDrag
+        mainView.searchTableView.rowHeight = 100
+    }
+
+    override func bind() {
+
+    }
+}
+
+extension LocalViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+}
+
+extension LocalViewController: SearchTableViewCellDelegate {
+    func didTapFavoriteButton(row: Int) {
 
     }
 }
