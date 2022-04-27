@@ -57,10 +57,10 @@ final class APIViewModel: ViewModelType {
                     switch response {
                     case .success(let data):
                         self.total = data.total
-                        self.appendData(searchItem: data.userItems)
+                        self.appendData(query: query, searchItem: data.userItems)
                         self.checkIsFavoriteStatus()
                         self.didLoadUserList.accept(self.totalSearchItem)
-                        self.noResultAction.accept(self.checkNoResult(searchItem: data.userItems))
+                        self.noResultAction.accept(self.checkNoResult(searchItem: self.totalSearchItem))
                         self.indicatorAction.accept(false)
                     case .failure(let error):
                         self.failToastAction.accept(error.errorDescription ?? "Error")
@@ -76,7 +76,7 @@ final class APIViewModel: ViewModelType {
                 self.getNextPageMovieData(query: query) { response in
                     switch response {
                     case .success(let data):
-                        self.appendData(searchItem: data.userItems)
+                        self.appendData(query: query, searchItem: data.userItems)
                         self.checkIsFavoriteStatus()
                         self.didLoadUserList.accept(self.totalSearchItem)
                     case .failure(let error):
@@ -170,10 +170,18 @@ extension APIViewModel {
         }
     }
 
-    private func appendData(searchItem: [UserItem]) {
+    private func appendData(query: String ,searchItem: [UserItem]) {
         for i in searchItem {
-            totalSearchItem.append(i)
+            let check = checkSearchUserName(query: query, name: i.userName)
+            if check {
+                totalSearchItem.append(i)
+            }
         }
+    }
+
+    private func checkSearchUserName(query: String, name: String) -> Bool {
+        let check = name.contains(query)
+        return check
     }
 
     private func addToDataBase(searchItem: UserItem) {
