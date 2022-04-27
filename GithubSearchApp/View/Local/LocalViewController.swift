@@ -20,7 +20,7 @@ final class LocalViewController: BaseViewController {
 
     private let requestFavoriteUserListEvent = PublishRelay<Void>()
     private let searchFavoriteUserListEvent = PublishRelay<String>()
-    private let pressFavoriteButtonEvent = PublishRelay<Int>()
+    private let pressFavoriteButtonEvent = PublishRelay<String>()
 
     private let mainView = ContentView()
     private var viewModel = LocalViewModel()
@@ -67,6 +67,13 @@ final class LocalViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        output.didPressFavoriteButton
+            .emit { [weak self] _ in
+                guard let self = self else { return }
+                self.requestFavoriteUserListEvent.accept(())
+            }
+            .disposed(by: disposeBag)
+
         output.sendSectionHeaderList
             .drive { [weak self] headerList in
                 guard let self = self else { return }
@@ -82,10 +89,10 @@ final class LocalViewController: BaseViewController {
             .disposed(by: disposeBag)
 
         mainView.searchBar.searchTextField.rx.text
+            .orEmpty
             .debounce(RxTimeInterval.milliseconds(100), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .bind { [weak self] query in
-                guard let query = query else { return }
                 guard let self = self else { return }
                 self.searchFavoriteUserListEvent.accept(query)
             }
@@ -95,6 +102,17 @@ final class LocalViewController: BaseViewController {
     private func searchFavoriteUserList() {
         guard let query = mainView.searchBar.searchTextField.text else { return }
         searchFavoriteUserListEvent.accept(query)
+    }
+
+    private func removeAlert(completion: @escaping ((UIAlertAction) -> Void)) {
+        let alert = UIAlertController(title: "정말 즐겨찾기에서 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { [weak self] action in
+            self?.requestFavoriteUserListEvent.accept(())
+        }
+        let ok = UIAlertAction(title: "삭제", style: .destructive, handler: completion)
+        alert.addAction(ok)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -107,8 +125,10 @@ extension LocalViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
 }
 
 extension LocalViewController: SearchTableViewCellDelegate {
-    func didTapFavoriteButton(row: Int) {
-        
+    func didTapFavoriteButton(row: Int, userID: String) {
+        removeAlert { [weak self] _ in
+            self?.pressFavoriteButtonEvent.accept(userID)
+        }
     }
 }
 

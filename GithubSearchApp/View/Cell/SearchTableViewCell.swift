@@ -10,7 +10,7 @@ import SnapKit
 import Kingfisher
 
 protocol SearchTableViewCellDelegate: AnyObject {
-    func didTapFavoriteButton(row: Int)
+    func didTapFavoriteButton(row: Int, userID: String)
 }
 
 final class SearchTableViewCell: UITableViewCell {
@@ -45,6 +45,7 @@ final class SearchTableViewCell: UITableViewCell {
     weak var delegate: SearchTableViewCellDelegate?
 
     var isFavorite = false
+    var cellItem: UserItem?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -97,14 +98,16 @@ final class SearchTableViewCell: UITableViewCell {
         userNameLabel.text = searchItem.userName
         favoriteButton.tintColor = searchItem.isFavorite ? .systemYellow : .systemGray3
         favoriteButton.tag = row
+        cellItem = searchItem
     }
 
     @objc private func favoriteButtonTap(sender: UIButton) {
         addPressAnimationToButton(scale: 0.85, favoriteButton) { [weak self] _ in
             guard let self = self else { return }
+            guard let cellItem = self.cellItem else { return }
             self.isFavorite.toggle()
             self.favoriteButton.tintColor = self.isFavorite ? .systemYellow : .systemGray3
-            self.delegate?.didTapFavoriteButton(row: sender.tag)
+            self.delegate?.didTapFavoriteButton(row: sender.tag, userID: cellItem.userID)
         }
     }
 }

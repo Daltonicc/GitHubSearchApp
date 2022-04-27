@@ -15,18 +15,18 @@ final class LocalViewModel: ViewModelType {
     struct Input {
         let requestFavoriteUserListEvent: Signal<Void>
         let searchFavoriteUserListEvent: Signal<String>
-        let pressFavoriteButtonEvent: Signal<Int>
+        let pressFavoriteButtonEvent: Signal<String>
     }
 
     struct Output {
         let didLoadFavoriteUserList: Driver<[UserItem]>
-        let didPressFavoriteButton: Signal<Int>
+        let didPressFavoriteButton: Signal<Void>
         let sendSectionHeaderList: Driver<[String]>
         let noResultAction: Driver<Bool>
     }
 
     private let didLoadFavoriteUserList = BehaviorRelay<[UserItem]>(value: [])
-    private let didPressFavoriteButton = PublishRelay<Int>()
+    private let didPressFavoriteButton = PublishRelay<Void>()
     private let sendSectionHeaderList = BehaviorRelay<[String]>(value: [])
     private let noResultAction = BehaviorRelay<Bool>(value: false)
 
@@ -64,6 +64,14 @@ final class LocalViewModel: ViewModelType {
                 self.sendSectionHeaderList.accept(self.headerList)
                 self.noResultAction.accept(self.checkNoResult(searchItem: self.favoriteSearchItem))
                 self.didLoadFavoriteUserList.accept(self.favoriteSearchItem)
+            }
+            .disposed(by: disposeBag)
+
+        input.pressFavoriteButtonEvent
+            .emit { [weak self] userID in
+                guard let self = self else { return }
+                self.checkUserIDAndDeleteFromDatabase(userID: userID)
+                self.didPressFavoriteButton.accept(())
             }
             .disposed(by: disposeBag)
 
@@ -110,5 +118,11 @@ extension LocalViewModel {
     private func searchFavoriteUser(query: String) -> Results<FavoriteUserList> {
         let filterList = favoriteUserList.filter("userName CONTAINS[c] '\(query)'")
         return filterList
+    }
+
+    private func checkUserIDAndDeleteFromDatabase(userID: String) {
+        let filterItem = favoriteUserList.filter("userId = '\(userID)'")[0]
+        RealmManager.shared.deleteObjectData(object: filterItem)
+
     }
 }
