@@ -58,7 +58,7 @@ final class ContentView: BaseView {
             make.leading.trailing.equalToSuperview()
         }
         searchTableView.snp.makeConstraints { make in
-            make.top.equalTo(separateView.snp.bottom)
+            make.top.equalTo(searchBar.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
         indicatorView.snp.makeConstraints { make in
