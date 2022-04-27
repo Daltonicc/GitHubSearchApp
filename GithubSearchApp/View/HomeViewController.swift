@@ -14,7 +14,7 @@ final class HomeViewController: TabmanViewController {
     private let viewControllers = [APIViewController(), LocalViewController()]
     private let tapTitleList = ["API", "Local"]
 
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "GitHub Stars"
         label.font = .boldSystemFont(ofSize: 30)
@@ -27,16 +27,20 @@ final class HomeViewController: TabmanViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: titleLabel)
 
         self.dataSource = self
+        tabBarConfig()
+    }
+
+    private func tabBarConfig() {
+
         let bar = TMBar.ButtonBar()
         bar.layout.transitionStyle = .snap
         bar.layout.contentMode = .fit
         bar.backgroundView.style = .clear
+        bar.indicator.tintColor = .black
         bar.buttons.customize { button in
             button.tintColor = .systemGray3
             button.selectedTintColor = .black
         }
-        bar.indicator.tintColor = .black
-
         addBar(bar, dataSource: self, at: .top)
     }
 }
