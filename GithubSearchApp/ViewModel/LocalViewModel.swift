@@ -33,6 +33,7 @@ final class LocalViewModel: ViewModelType {
     var disposeBag = DisposeBag()
 
     var favoriteSearchItem: [UserItem] = []
+    var headerList: [String] = []
 
     private var favoriteUserList: Results<FavoriteUserList>! {
         return RealmManager.shared.loadListData().sorted(byKeyPath: "userName", ascending: true)
@@ -43,8 +44,24 @@ final class LocalViewModel: ViewModelType {
         input.requestFavoriteUserListEvent
             .emit { [weak self] _ in
                 guard let self = self else { return }
-                self.getFavoriteUserData()
-                self.sendSectionHeaderList.accept(self.getSectionHeaderList())
+                self.getFavoriteUserData(list: self.favoriteUserList)
+                self.getSectionHeaderList()
+                self.sendSectionHeaderList.accept(self.headerList)
+                self.noResultAction.accept(self.checkNoResult(searchItem: self.favoriteSearchItem))
+                self.didLoadFavoriteUserList.accept(self.favoriteSearchItem)
+            }
+            .disposed(by: disposeBag)
+
+        input.searchFavoriteUserListEvent
+            .emit { [weak self] query in
+                guard let self = self else { return }
+                if query.count == 0 {
+                    self.getFavoriteUserData(list: self.favoriteUserList)
+                } else {
+                    self.getFavoriteUserData(list: self.searchFavoriteUser(query: query))
+                }
+                self.getSectionHeaderList()
+                self.sendSectionHeaderList.accept(self.headerList)
                 self.noResultAction.accept(self.checkNoResult(searchItem: self.favoriteSearchItem))
                 self.didLoadFavoriteUserList.accept(self.favoriteSearchItem)
             }
@@ -61,13 +78,13 @@ final class LocalViewModel: ViewModelType {
 
 extension LocalViewModel {
 
-    private func getFavoriteUserData() {
+    private func getFavoriteUserData(list: Results<FavoriteUserList>) {
         favoriteSearchItem.removeAll()
-        for i in 0..<favoriteUserList.count {
-            let data = UserItem(userName: favoriteUserList[i].userName,
-                                  userImage: favoriteUserList[i].userProfileImage,
-                                  userID: favoriteUserList[i].userId,
-                                  isFavorite: favoriteUserList[i].isFavorite)
+        for i in 0..<list.count {
+            let data = UserItem(userName: list[i].userName,
+                                  userImage: list[i].userProfileImage,
+                                  userID: list[i].userId,
+                                  isFavorite: list[i].isFavorite)
             favoriteSearchItem.append(data)
         }
     }
@@ -80,14 +97,18 @@ extension LocalViewModel {
         }
     }
 
-    private func getSectionHeaderList() -> [String] {
+    private func getSectionHeaderList() {
         var list: [String] = []
         for i in favoriteSearchItem {
             let index = i.userName.startIndex
             let character = String(i.userName[index]).uppercased()
             list.append(character)
         }
-        let headerList = Array(Set(list).sorted())
-        return headerList
+        headerList = Array(Set(list).sorted())
+    }
+
+    private func searchFavoriteUser(query: String) -> Results<FavoriteUserList> {
+        let filterList = favoriteUserList.filter("userName CONTAINS[c] '\(query)'")
+        return filterList
     }
 }

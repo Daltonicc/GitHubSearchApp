@@ -63,6 +63,7 @@ final class LocalViewController: BaseViewController {
             .drive { [weak self] item in
                 guard let self = self else { return }
                 self.favoriteUserList = item
+                self.mainView.searchTableView.reloadData()
             }
             .disposed(by: disposeBag)
 
@@ -79,15 +80,27 @@ final class LocalViewController: BaseViewController {
                 self.mainView.noResultView.isHidden = bool
             }
             .disposed(by: disposeBag)
+
+        mainView.searchBar.searchTextField.rx.text
+            .debounce(RxTimeInterval.milliseconds(100), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .bind { [weak self] query in
+                guard let query = query else { return }
+                guard let self = self else { return }
+                self.searchFavoriteUserListEvent.accept(query)
+            }
+            .disposed(by: disposeBag)
     }
 
-    private func asd() {
-
+    private func searchFavoriteUserList() {
+        guard let query = mainView.searchBar.searchTextField.text else { return }
+        searchFavoriteUserListEvent.accept(query)
     }
 }
 
 extension LocalViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchFavoriteUserList()
         textField.resignFirstResponder()
         return true
     }
