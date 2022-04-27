@@ -33,7 +33,7 @@ final class LocalViewModel: ViewModelType {
     var favoriteSearchItem: [UserItem] = []
 
     private var favoriteUserList: Results<FavoriteUserList>! {
-        return RealmManager.shared.loadListData()
+        return RealmManager.shared.loadListData().sorted(byKeyPath: "userName", ascending: true)
     }
 
     func transform(input: Input) -> Output {
