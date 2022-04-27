@@ -21,11 +21,13 @@ final class LocalViewModel: ViewModelType {
     struct Output {
         let didLoadFavoriteUserList: Driver<[UserItem]>
         let didPressFavoriteButton: Signal<Int>
+        let sendSectionHeaderList: Driver<[String]>
         let noResultAction: Driver<Bool>
     }
 
     private let didLoadFavoriteUserList = BehaviorRelay<[UserItem]>(value: [])
     private let didPressFavoriteButton = PublishRelay<Int>()
+    private let sendSectionHeaderList = BehaviorRelay<[String]>(value: [])
     private let noResultAction = BehaviorRelay<Bool>(value: false)
 
     var disposeBag = DisposeBag()
@@ -42,6 +44,7 @@ final class LocalViewModel: ViewModelType {
             .emit { [weak self] _ in
                 guard let self = self else { return }
                 self.getFavoriteUserData()
+                self.sendSectionHeaderList.accept(self.getSectionHeaderList())
                 self.noResultAction.accept(self.checkNoResult(searchItem: self.favoriteSearchItem))
                 self.didLoadFavoriteUserList.accept(self.favoriteSearchItem)
             }
@@ -50,6 +53,7 @@ final class LocalViewModel: ViewModelType {
         return Output(
             didLoadFavoriteUserList: didLoadFavoriteUserList.asDriver(),
             didPressFavoriteButton: didPressFavoriteButton.asSignal(),
+            sendSectionHeaderList: sendSectionHeaderList.asDriver(),
             noResultAction: noResultAction.asDriver()
         )
     }
@@ -74,5 +78,16 @@ extension LocalViewModel {
         } else {
             return true
         }
+    }
+
+    private func getSectionHeaderList() -> [String] {
+        var list: [String] = []
+        for i in favoriteSearchItem {
+            let index = i.userName.startIndex
+            let character = String(i.userName[index]).uppercased()
+            list.append(character)
+        }
+        let headerList = Array(Set(list).sorted())
+        return headerList
     }
 }

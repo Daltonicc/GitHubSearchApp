@@ -26,7 +26,8 @@ final class LocalViewController: BaseViewController {
     private var viewModel = LocalViewModel()
     private let disposeBag = DisposeBag()
 
-    private var favoriteUserList: [UserItem] = []
+    private lazy var favoriteUserList: [UserItem] = []
+    private lazy var headerList: [String] = []
 
     override func loadView() {
         self.view = mainView
@@ -44,6 +45,7 @@ final class LocalViewController: BaseViewController {
         super.setViewConfig()
 
         mainView.noResultView.status = .local
+        mainView.indicatorView.isHidden = true
         
         mainView.searchBar.delegate = self
         mainView.searchBar.searchTextField.delegate = self
@@ -61,7 +63,13 @@ final class LocalViewController: BaseViewController {
             .drive { [weak self] item in
                 guard let self = self else { return }
                 self.favoriteUserList = item
-                self.mainView.searchTableView.reloadData()
+            }
+            .disposed(by: disposeBag)
+
+        output.sendSectionHeaderList
+            .drive { [weak self] headerList in
+                guard let self = self else { return }
+                self.headerList = headerList
             }
             .disposed(by: disposeBag)
 
@@ -71,6 +79,9 @@ final class LocalViewController: BaseViewController {
                 self.mainView.noResultView.isHidden = bool
             }
             .disposed(by: disposeBag)
+    }
+
+    private func asd() {
 
     }
 }
@@ -84,21 +95,35 @@ extension LocalViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
 
 extension LocalViewController: SearchTableViewCellDelegate {
     func didTapFavoriteButton(row: Int) {
-
+        
     }
 }
 
 extension LocalViewController: UITableViewDelegate, UITableViewDataSource {
 
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return headerList.count
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoriteUserList.count
+        let index = favoriteUserList[0].userName.startIndex
+        let character = favoriteUserList.map { String($0.userName[index].uppercased()) }
+        let number = character.filter { $0 == headerList[section] }.count
+        return number
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell else { return UITableViewCell() }
         let row = indexPath.row
-        cell.cellConfig(searchItem: favoriteUserList[row], row: row)
+        let index = favoriteUserList[0].userName.startIndex
+        let list = favoriteUserList.filter { $0.userName[index].uppercased() == headerList[indexPath.section] }
+
+        cell.cellConfig(searchItem: list[row], row: row)
         cell.delegate = self
         return cell
+    }
+
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return headerList[section]
     }
 }
