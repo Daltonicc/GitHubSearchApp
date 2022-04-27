@@ -8,17 +8,15 @@
 import UIKit
 import RxSwift
 import RxCocoa
-import RxDataSources
 import Toast
 
-class APIViewController: BaseViewController {
+final class APIViewController: BaseViewController {
 
     private lazy var input = APIViewModel.Input(
         requestUserListEvent: requestUserListEvent.asSignal(),
         requestNextPageListEvent: requestNextPageListEvent.asSignal(),
         apiTabPressEvent: apiTabPressEvent.asSignal(),
         searchFavoriteUserListEvent: searchFavoriteUserListEvent.asSignal(),
-        localTabPressEvent: localTabPressEvent.asSignal(),
         pressFavoriteButtonEvent: pressFavoriteButtonEvent.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
@@ -27,10 +25,9 @@ class APIViewController: BaseViewController {
     private let requestNextPageListEvent = PublishRelay<String>()
     private let apiTabPressEvent = PublishRelay<Void>()
     private let searchFavoriteUserListEvent = PublishRelay<String>()
-    private let localTabPressEvent = PublishRelay<Void>()
     private let pressFavoriteButtonEvent = PublishRelay<Int>()
 
-    private let mainView = APIView()
+    private let mainView = ContentView()
     private var viewModel = APIViewModel()
     private let disposeBag = DisposeBag()
 
@@ -44,6 +41,8 @@ class APIViewController: BaseViewController {
 
     override func setViewConfig() {
         super.setViewConfig()
+
+        mainView.noResultView.status = .api
 
         mainView.searchBar.delegate = self
         mainView.searchBar.searchTextField.delegate = self

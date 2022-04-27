@@ -13,14 +13,10 @@ import RealmSwift
 final class APIViewModel: ViewModelType {
 
     struct Input {
-        // API Tab
         let requestUserListEvent: Signal<String>
         let requestNextPageListEvent: Signal<String>
         let apiTabPressEvent: Signal<Void>
-        // Local Tab
         let searchFavoriteUserListEvent: Signal<String>
-        let localTabPressEvent: Signal<Void>
-        // common
         let pressFavoriteButtonEvent: Signal<Int>
     }
 
@@ -46,7 +42,6 @@ final class APIViewModel: ViewModelType {
     private var page = 1
 
     var totalSearchItem: [UserItem] = []
-    var favoriteSearchItem: [UserItem] = []
 
     private var favoriteUserList: Results<FavoriteUserList>! {
         return RealmManager.shared.loadListData()
@@ -98,15 +93,6 @@ final class APIViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
-        input.localTabPressEvent
-            .emit { [weak self] _ in
-                guard let self = self else { return }
-                self.getFavoriteUserData()
-                self.noResultAction.accept(self.checkNoResult(searchItem: self.favoriteSearchItem))
-                self.didLoadUserList.accept(self.favoriteSearchItem)
-            }
-            .disposed(by: disposeBag)
-
         input.pressFavoriteButtonEvent
             .emit { [weak self] row in
                 guard let self = self else { return }
@@ -150,17 +136,6 @@ extension APIViewModel {
             APIManager.shared.requestSearchUser(parameter: parameter, completion: completion)
         } else {
             return
-        }
-    }
-
-    private func getFavoriteUserData() {
-        favoriteSearchItem.removeAll()
-        for i in 0..<favoriteUserList.count {
-            let data = UserItem(userName: favoriteUserList[i].userName,
-                                  userImage: favoriteUserList[i].userProfileImage,
-                                  userID: favoriteUserList[i].userId,
-                                  isFavorite: favoriteUserList[i].isFavorite)
-            favoriteSearchItem.append(data)
         }
     }
 
