@@ -10,12 +10,23 @@ import SnapKit
 
 final class NoResultView: BaseView {
 
+    enum NoResultStatus {
+        case api
+        case local
+    }
+
     let noResultLabel: UILabel = {
         let label = UILabel()
         label.font = .boldSystemFont(ofSize: 25)
         label.textColor = .systemGray3
         return label
     }()
+
+    var status: NoResultStatus = .api {
+        didSet {
+            statusConfig()
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,6 +50,13 @@ final class NoResultView: BaseView {
 
         noResultLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+    }
+
+    private func statusConfig() {
+        switch status {
+        case .api: noResultLabel.text = "검색 결과가 없습니다."
+        case .local: noResultLabel.text = "즐겨찾기 목록이 없습니다."
         }
     }
 }
