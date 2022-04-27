@@ -82,6 +82,18 @@ final class APIViewController: BaseViewController {
                 self.mainView.makeToast(errorMessage)
             }
             .disposed(by: disposeBag)
+
+        mainView.searchBar.searchTextField.rx.text
+            .orEmpty
+            .debounce(RxTimeInterval.milliseconds(500), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .bind { [weak self] query in
+                guard let self = self else { return }
+                if query.count >= 1 {
+                    self.requestUserListEvent.accept(query)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 
     private func requestUserList() {
