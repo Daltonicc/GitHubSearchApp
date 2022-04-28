@@ -126,8 +126,12 @@ extension LocalViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
 
 extension LocalViewController: SearchTableViewCellDelegate {
     func didTapFavoriteButton(row: Int, userID: String) {
-        removeAlert { [weak self] _ in
-            guard let self = self else { return }
+        if #available(iOS 14.0, *) {
+            removeAlert { [weak self] _ in
+                guard let self = self else { return }
+                self.pressFavoriteButtonEvent.accept(userID)
+            }
+        } else {
             self.pressFavoriteButtonEvent.accept(userID)
         }
     }
