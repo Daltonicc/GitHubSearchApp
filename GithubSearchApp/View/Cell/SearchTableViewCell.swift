@@ -95,10 +95,24 @@ final class SearchTableViewCell: UITableViewCell {
             userImageView.image = UIImage(systemName: "star")
         }
         isFavorite = searchItem.isFavorite
-        userNameLabel.text = searchItem.userName
         favoriteButton.tintColor = searchItem.isFavorite ? .systemYellow : .systemGray3
         favoriteButton.tag = row
         cellItem = searchItem
+    }
+
+    func cellConfigForAPI(searchItem: UserItem, row: Int) {
+
+        cellConfig(searchItem: searchItem, row: row)
+        userNameLabel.text = searchItem.userName
+    }
+
+    func cellConfigForLocal(query: String, searchItem: UserItem, row: Int) {
+
+        cellConfig(searchItem: searchItem, row: row)
+        let userName = NSMutableAttributedString(string: searchItem.userName)
+        let range = (searchItem.userName as NSString).range(of: query, options: .caseInsensitive)
+        userName.addAttribute(.foregroundColor, value: UIColor.systemGreen, range: range)
+        userNameLabel.attributedText = userName
     }
 
     @objc private func favoriteButtonTap(sender: UIButton) {
