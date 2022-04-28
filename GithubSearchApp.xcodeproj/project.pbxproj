@@ -17,12 +17,13 @@
 		6A3650E628155FCA00BE71C7 /* RealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3650E528155FCA00BE71C7 /* RealmModel.swift */; };
 		6A3650E928158BC700BE71C7 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 6A3650E828158BC700BE71C7 /* RxCocoa */; };
 		6A3650EB28158BC700BE71C7 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 6A3650EA28158BC700BE71C7 /* RxSwift */; };
-		6A3650EE28158C4500BE71C7 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 6A3650ED28158C4500BE71C7 /* RxDataSources */; };
 		6A3651302816913E00BE71C7 /* Tabman in Frameworks */ = {isa = PBXBuildFile; productRef = 6A36512F2816913E00BE71C7 /* Tabman */; };
 		6A3651322816914F00BE71C7 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3651312816914F00BE71C7 /* HomeViewController.swift */; };
 		6A3651342816918300BE71C7 /* LocalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3651332816918300BE71C7 /* LocalViewController.swift */; };
 		6A36513A2816A03B00BE71C7 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A3651392816A03B00BE71C7 /* BaseView.swift */; };
 		6A36513C2816A05300BE71C7 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A36513B2816A05300BE71C7 /* BaseViewController.swift */; };
+		6A36513E2816A1DF00BE71C7 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A36513D2816A1DF00BE71C7 /* ContentView.swift */; };
+		6A3651402816A55F00BE71C7 /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A36513F2816A55F00BE71C7 /* LocalViewModel.swift */; };
 		6A39D8A128129275004B444E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8A028129275004B444E /* AppDelegate.swift */; };
 		6A39D8A328129275004B444E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8A228129275004B444E /* SceneDelegate.swift */; };
 		6A39D8A528129275004B444E /* APIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8A428129275004B444E /* APIViewController.swift */; };
@@ -34,11 +35,9 @@
 		6A39D8D92813BF07004B444E /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6A39D8D82813BF07004B444E /* SnapKit */; };
 		6A39D8E42813BF6D004B444E /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 6A39D8E32813BF6D004B444E /* Moya */; };
 		6A39D8E72813BF7F004B444E /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 6A39D8E62813BF7F004B444E /* Toast */; };
-		6A39D8E92813BFCE004B444E /* APIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8E82813BFCE004B444E /* APIView.swift */; };
 		6A39D8EB2813C021004B444E /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 6A39D8EA2813C021004B444E /* .swiftlint.yml */; };
 		6A39D8F12813C430004B444E /* ViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8F02813C430004B444E /* ViewRepresentable.swift */; };
 		6A39D8F32813C44C004B444E /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8F22813C44C004B444E /* ViewModelType.swift */; };
-		6A39D8F52813C551004B444E /* TabButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8F42813C551004B444E /* TabButton.swift */; };
 		6A39D8F72814313C004B444E /* APIViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8F62814313C004B444E /* APIViewModel.swift */; };
 		6A39D8F9281431EA004B444E /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8F8281431EA004B444E /* APIService.swift */; };
 		6A39D8FB28143352004B444E /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D8FA28143352004B444E /* SearchTableViewCell.swift */; };
@@ -47,6 +46,7 @@
 		6A39D90228144F52004B444E /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D90128144F52004B444E /* APIKey.swift */; };
 		6A39D904281452DA004B444E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D903281452DA004B444E /* NetworkError.swift */; };
 		6A39D906281454BB004B444E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D905281454BB004B444E /* UserData.swift */; };
+		6AE8EBBF281A7B8C00D4CDD5 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EBBE281A7B8C00D4CDD5 /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +76,8 @@
 		6A3651332816918300BE71C7 /* LocalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalViewController.swift; sourceTree = "<group>"; };
 		6A3651392816A03B00BE71C7 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		6A36513B2816A05300BE71C7 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		6A36513D2816A1DF00BE71C7 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		6A36513F2816A55F00BE71C7 /* LocalViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalViewModel.swift; sourceTree = "<group>"; };
 		6A39D89D28129275004B444E /* GithubSearchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GithubSearchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A39D8A028129275004B444E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A39D8A228129275004B444E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,11 +90,9 @@
 		6A39D8BD28129276004B444E /* GithubSearchAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GithubSearchAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A39D8C128129276004B444E /* GithubSearchAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubSearchAppUITests.swift; sourceTree = "<group>"; };
 		6A39D8C328129276004B444E /* GithubSearchAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GithubSearchAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		6A39D8E82813BFCE004B444E /* APIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIView.swift; sourceTree = "<group>"; };
 		6A39D8EA2813C021004B444E /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		6A39D8F02813C430004B444E /* ViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewRepresentable.swift; sourceTree = "<group>"; };
 		6A39D8F22813C44C004B444E /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
-		6A39D8F42813C551004B444E /* TabButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabButton.swift; sourceTree = "<group>"; };
 		6A39D8F62814313C004B444E /* APIViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIViewModel.swift; sourceTree = "<group>"; };
 		6A39D8F8281431EA004B444E /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		6A39D8FA28143352004B444E /* SearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -101,6 +101,7 @@
 		6A39D90128144F52004B444E /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		6A39D903281452DA004B444E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		6A39D905281454BB004B444E /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		6AE8EBBE281A7B8C00D4CDD5 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,7 +116,6 @@
 				6A39D8E42813BF6D004B444E /* Moya in Frameworks */,
 				6A3651302816913E00BE71C7 /* Tabman in Frameworks */,
 				6A39D8E72813BF7F004B444E /* Toast in Frameworks */,
-				6A3650EE28158C4500BE71C7 /* RxDataSources in Frameworks */,
 				6A3650EB28158BC700BE71C7 /* RxSwift in Frameworks */,
 				6A39D8D92813BF07004B444E /* SnapKit in Frameworks */,
 			);
@@ -141,7 +141,6 @@
 		6A36513528169DFE00BE71C7 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				6A39D8E82813BFCE004B444E /* APIView.swift */,
 				6A39D8A428129275004B444E /* APIViewController.swift */,
 			);
 			path = API;
@@ -259,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				6A39D8F62814313C004B444E /* APIViewModel.swift */,
+				6A36513F2816A55F00BE71C7 /* LocalViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -297,9 +297,9 @@
 		6A39D8EE2813C2E5004B444E /* Custom */ = {
 			isa = PBXGroup;
 			children = (
-				6A39D8F42813C551004B444E /* TabButton.swift */,
 				6A3650DA2815061000BE71C7 /* IndicatorView.swift */,
 				6A3650DC28152CA900BE71C7 /* NoResultView.swift */,
+				6A36513D2816A1DF00BE71C7 /* ContentView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -317,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				6A39D8FD281433BB004B444E /* UITableViewController+Extension.swift */,
+				6AE8EBBE281A7B8C00D4CDD5 /* UIColor+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -356,7 +357,6 @@
 				6A3650E128155F8600BE71C7 /* RealmSwift */,
 				6A3650E828158BC700BE71C7 /* RxCocoa */,
 				6A3650EA28158BC700BE71C7 /* RxSwift */,
-				6A3650ED28158C4500BE71C7 /* RxDataSources */,
 				6A36512F2816913E00BE71C7 /* Tabman */,
 			);
 			productName = GithubSearchApp;
@@ -438,7 +438,6 @@
 				6A3650D72814708B00BE71C7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				6A3650DE28155F8600BE71C7 /* XCRemoteSwiftPackageReference "realm-swift" */,
 				6A3650E728158BC600BE71C7 /* XCRemoteSwiftPackageReference "RxSwift" */,
-				6A3650EC28158C4400BE71C7 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				6A36512E2816913E00BE71C7 /* XCRemoteSwiftPackageReference "Tabman" */,
 			);
 			productRefGroup = 6A39D89E28129275004B444E /* Products */;
@@ -506,7 +505,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A3650D628145B9400BE71C7 /* APIManager.swift in Sources */,
-				6A39D8F52813C551004B444E /* TabButton.swift in Sources */,
+				6A36513E2816A1DF00BE71C7 /* ContentView.swift in Sources */,
 				6A39D904281452DA004B444E /* NetworkError.swift in Sources */,
 				6A39D90028144BE6004B444E /* SearchUserResponseDTO.swift in Sources */,
 				6A39D8A528129275004B444E /* APIViewController.swift in Sources */,
@@ -514,7 +513,6 @@
 				6A3651322816914F00BE71C7 /* HomeViewController.swift in Sources */,
 				6A3651342816918300BE71C7 /* LocalViewController.swift in Sources */,
 				6A39D8F72814313C004B444E /* APIViewModel.swift in Sources */,
-				6A39D8E92813BFCE004B444E /* APIView.swift in Sources */,
 				6A39D8F32813C44C004B444E /* ViewModelType.swift in Sources */,
 				6A39D8A128129275004B444E /* AppDelegate.swift in Sources */,
 				6A39D8A328129275004B444E /* SceneDelegate.swift in Sources */,
@@ -522,11 +520,13 @@
 				6A3650E428155F9C00BE71C7 /* RealmManager.swift in Sources */,
 				6A39D8F9281431EA004B444E /* APIService.swift in Sources */,
 				6A3650E628155FCA00BE71C7 /* RealmModel.swift in Sources */,
+				6A3651402816A55F00BE71C7 /* LocalViewModel.swift in Sources */,
 				6A3650DB2815061000BE71C7 /* IndicatorView.swift in Sources */,
 				6A39D8FE281433BB004B444E /* UITableViewController+Extension.swift in Sources */,
 				6A39D8F12813C430004B444E /* ViewRepresentable.swift in Sources */,
 				6A36513A2816A03B00BE71C7 /* BaseView.swift in Sources */,
 				6A39D90228144F52004B444E /* APIKey.swift in Sources */,
+				6AE8EBBF281A7B8C00D4CDD5 /* UIColor+Extension.swift in Sources */,
 				6A39D906281454BB004B444E /* UserData.swift in Sources */,
 				6A39D8FB28143352004B444E /* SearchTableViewCell.swift in Sources */,
 			);
@@ -892,14 +892,6 @@
 				minimumVersion = 6.0.0;
 			};
 		};
-		6A3650EC28158C4400BE71C7 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 		6A36512E2816913E00BE71C7 /* XCRemoteSwiftPackageReference "Tabman" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/uias/Tabman.git";
@@ -959,11 +951,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6A3650E728158BC600BE71C7 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
-		};
-		6A3650ED28158C4500BE71C7 /* RxDataSources */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6A3650EC28158C4400BE71C7 /* XCRemoteSwiftPackageReference "RxDataSources" */;
-			productName = RxDataSources;
 		};
 		6A36512F2816913E00BE71C7 /* Tabman */ = {
 			isa = XCSwiftPackageProductDependency;

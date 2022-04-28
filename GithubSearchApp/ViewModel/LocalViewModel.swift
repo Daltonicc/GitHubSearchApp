@@ -123,6 +123,5 @@ extension LocalViewModel {
     private func checkUserIDAndDeleteFromDatabase(userID: String) {
         let filterItem = favoriteUserList.filter("userId = '\(userID)'")[0]
         RealmManager.shared.deleteObjectData(object: filterItem)
-
     }
 }
