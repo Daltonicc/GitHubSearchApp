@@ -35,6 +35,10 @@ final class APIViewController: BaseViewController {
         self.view = mainView
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        requestUserList()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -56,7 +60,7 @@ final class APIViewController: BaseViewController {
 
         output.didLoadUserList
             .drive(mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
-                cell.cellConfig(searchItem: element, row: row)
+                cell.cellConfigForAPI(searchItem: element, row: row)
                 cell.delegate = self
                 self.requestNextPage(row: row, element: self.viewModel.totalSearchItem)
             }
@@ -98,7 +102,9 @@ final class APIViewController: BaseViewController {
 
     private func requestUserList() {
         guard let query = mainView.searchBar.searchTextField.text else { return }
-        requestUserListEvent.accept(query)
+        if query.count >= 1 {
+            requestUserListEvent.accept(query)
+        }
     }
 
     private func requestNextPage(row: Int, element: [UserItem]) {
@@ -128,7 +134,7 @@ extension APIViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
 }
 
 extension APIViewController: SearchTableViewCellDelegate {
-    func didTapFavoriteButton(row: Int) {
+    func didTapFavoriteButton(row: Int, userID: String) {
         pressFavoriteButtonEvent.accept(row)
     }
 }
