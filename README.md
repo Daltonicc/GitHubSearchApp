@@ -20,13 +20,14 @@ GitHub 유저 검색 API를 활용한 iOS 어플리케이션.
   + 액티비티 인디케이터
 * 즐겨찾기 유저 뷰
   + 즐겨찾기 유저 실시간 검색 기능
-  + 즐겨찾기 추가/제거
+  + 검색어 색깔 변환
+  + 즐겨찾기 유저 제거
   
 ## Getting Started
 
 ### Skill
 
-    Swift, RxSwift, RxCocoa, RxDataSources
+    Swift, RxSwift, RxCocoa
     MVVM + Input/Output
     UIKit, AutoLayout
     Moya, SnapKit, Kingfisher, Toast, Tapman
