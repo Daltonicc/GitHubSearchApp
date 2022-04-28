@@ -159,11 +159,13 @@ extension LocalViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchTableViewCell.identifier, for: indexPath) as? SearchTableViewCell else { return UITableViewCell() }
+        guard let query = mainView.searchBar.searchTextField.text else { return UITableViewCell() }
+
         let row = indexPath.row
         let index = favoriteUserList[0].userName.startIndex
         let list = favoriteUserList.filter { $0.userName[index].uppercased() == headerList[indexPath.section] }
 
-        cell.cellConfigForLocal(query: mainView.searchBar.searchTextField.text!, searchItem: list[row], row: row)
+        cell.cellConfigForLocal(query: query, searchItem: list[row], row: row)
         cell.delegate = self
         return cell
     }
