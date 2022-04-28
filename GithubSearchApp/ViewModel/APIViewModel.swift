@@ -15,7 +15,6 @@ final class APIViewModel: ViewModelType {
     struct Input {
         let requestUserListEvent: Signal<String>
         let requestNextPageListEvent: Signal<String>
-        let apiTabPressEvent: Signal<Void>
         let searchFavoriteUserListEvent: Signal<String>
         let pressFavoriteButtonEvent: Signal<Int>
     }
@@ -83,13 +82,6 @@ final class APIViewModel: ViewModelType {
                         self.failToastAction.accept(error.errorDescription ?? "Error")
                     }
                 }
-            }
-            .disposed(by: disposeBag)
-
-        input.apiTabPressEvent
-            .emit { [weak self] _ in
-                guard let self = self else { return }
-                self.didLoadUserList.accept(self.totalSearchItem)
             }
             .disposed(by: disposeBag)
 

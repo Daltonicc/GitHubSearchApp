@@ -15,7 +15,6 @@ final class APIViewController: BaseViewController {
     private lazy var input = APIViewModel.Input(
         requestUserListEvent: requestUserListEvent.asSignal(),
         requestNextPageListEvent: requestNextPageListEvent.asSignal(),
-        apiTabPressEvent: apiTabPressEvent.asSignal(),
         searchFavoriteUserListEvent: searchFavoriteUserListEvent.asSignal(),
         pressFavoriteButtonEvent: pressFavoriteButtonEvent.asSignal()
     )
@@ -23,7 +22,6 @@ final class APIViewController: BaseViewController {
 
     private let requestUserListEvent = PublishRelay<String>()
     private let requestNextPageListEvent = PublishRelay<String>()
-    private let apiTabPressEvent = PublishRelay<Void>()
     private let searchFavoriteUserListEvent = PublishRelay<String>()
     private let pressFavoriteButtonEvent = PublishRelay<Int>()
 
