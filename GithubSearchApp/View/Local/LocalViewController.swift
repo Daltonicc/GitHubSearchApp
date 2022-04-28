@@ -127,7 +127,8 @@ extension LocalViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
 extension LocalViewController: SearchTableViewCellDelegate {
     func didTapFavoriteButton(row: Int, userID: String) {
         removeAlert { [weak self] _ in
-            self?.pressFavoriteButtonEvent.accept(userID)
+            guard let self = self else { return }
+            self.pressFavoriteButtonEvent.accept(userID)
         }
     }
 }
@@ -151,12 +152,16 @@ extension LocalViewController: UITableViewDelegate, UITableViewDataSource {
         let index = favoriteUserList[0].userName.startIndex
         let list = favoriteUserList.filter { $0.userName[index].uppercased() == headerList[indexPath.section] }
 
-        cell.cellConfig(searchItem: list[row], row: row)
+        cell.cellConfigForLocal(query: mainView.searchBar.searchTextField.text!, searchItem: list[row], row: row)
         cell.delegate = self
         return cell
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return headerList[section]
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

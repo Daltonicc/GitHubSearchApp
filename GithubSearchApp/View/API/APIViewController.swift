@@ -87,6 +87,13 @@ final class APIViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        mainView.searchTableView.rx.itemSelected
+            .bind { [weak self] indexPath in
+                guard let self = self else { return }
+                self.mainView.searchTableView.deselectRow(at: indexPath, animated: true)
+            }
+            .disposed(by: disposeBag)
+
         mainView.searchBar.searchTextField.rx.text
             .orEmpty
             .debounce(RxTimeInterval.milliseconds(500), scheduler: MainScheduler.instance)
