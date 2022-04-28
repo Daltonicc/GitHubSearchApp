@@ -15,14 +15,12 @@ final class APIViewController: BaseViewController {
     private lazy var input = APIViewModel.Input(
         requestUserListEvent: requestUserListEvent.asSignal(),
         requestNextPageListEvent: requestNextPageListEvent.asSignal(),
-        searchFavoriteUserListEvent: searchFavoriteUserListEvent.asSignal(),
         pressFavoriteButtonEvent: pressFavoriteButtonEvent.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
 
     private let requestUserListEvent = PublishRelay<String>()
     private let requestNextPageListEvent = PublishRelay<String>()
-    private let searchFavoriteUserListEvent = PublishRelay<String>()
     private let pressFavoriteButtonEvent = PublishRelay<Int>()
 
     private let mainView = ContentView()

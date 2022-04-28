@@ -15,7 +15,6 @@ final class APIViewModel: ViewModelType {
     struct Input {
         let requestUserListEvent: Signal<String>
         let requestNextPageListEvent: Signal<String>
-        let searchFavoriteUserListEvent: Signal<String>
         let pressFavoriteButtonEvent: Signal<Int>
     }
 
