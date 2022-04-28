@@ -54,6 +54,7 @@ final class APIViewController: BaseViewController {
 
     override func bind() {
 
+        // 검색 유저 리스트 호출
         output.didLoadUserList
             .drive(mainView.searchTableView.rx.items(cellIdentifier: SearchTableViewCell.identifier, cellType: SearchTableViewCell.self)) { (row, element, cell) in
                 cell.cellConfigForAPI(searchItem: element, row: row)
@@ -62,6 +63,7 @@ final class APIViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // 검색 결과가 없을 때
         output.noResultAction
             .drive { [weak self] bool in
                 guard let self = self else { return }
@@ -69,6 +71,7 @@ final class APIViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // 로딩 인디케이터
         output.indicatorActin
             .drive { [weak self] bool in
                 guard let self = self else { return }
@@ -76,6 +79,7 @@ final class APIViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // 네트워크 에러시 토스트
         output.failToastAction
             .emit { [weak self] errorMessage in
                 guard let self = self else { return }
@@ -83,6 +87,7 @@ final class APIViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // 셀 클릭했을 때
         mainView.searchTableView.rx.itemSelected
             .bind { [weak self] indexPath in
                 guard let self = self else { return }
@@ -90,6 +95,7 @@ final class APIViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // 0.5초 단위 실시간 검색 기능
         mainView.searchBar.searchTextField.rx.text
             .orEmpty
             .debounce(RxTimeInterval.milliseconds(500), scheduler: MainScheduler.instance)
@@ -110,6 +116,7 @@ final class APIViewController: BaseViewController {
         }
     }
 
+    // Pagination
     private func requestNextPage(row: Int, element: [UserItem]) {
         if row == element.count - 1 {
             guard let query = mainView.searchBar.searchTextField.text else { return }

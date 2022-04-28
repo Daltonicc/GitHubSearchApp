@@ -47,6 +47,7 @@ final class APIViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
 
+        // 사용자 검색 요청 받았을 때 로직
         input.requestUserListEvent
             .emit { [weak self] query in
                 guard let self = self else { return }
@@ -68,6 +69,7 @@ final class APIViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
+        // 다음 페이지 요청 받았을 때 로직
         input.requestNextPageListEvent
             .emit { [weak self] query in
                 guard let self = self else { return }
@@ -84,6 +86,7 @@ final class APIViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
+        // 즐겨찾기 추가/제거 로직
         input.pressFavoriteButtonEvent
             .emit { [weak self] row in
                 guard let self = self else { return }
@@ -116,6 +119,7 @@ extension APIViewModel {
         APIManager.shared.requestSearchUser(parameter: parameter, completion: completion)
     }
 
+    // 마지막 페이지 체크 로직
     private func getNextPageMovieData(query: String, completion: @escaping (Result<UserData, SearchError>) -> Void) {
         page += 1
         let parameter = [

@@ -41,6 +41,7 @@ final class LocalViewModel: ViewModelType {
 
     func transform(input: Input) -> Output {
 
+        // 즐겨찾기 유저 리스트 요청 받았을 때 로직
         input.requestFavoriteUserListEvent
             .emit { [weak self] _ in
                 guard let self = self else { return }
@@ -52,6 +53,7 @@ final class LocalViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
+        // 즐겨찾기 유저 검색할 때 로직
         input.searchFavoriteUserListEvent
             .emit { [weak self] query in
                 guard let self = self else { return }
@@ -67,6 +69,7 @@ final class LocalViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
+        // 즐겨찾기 추가/제거 로직
         input.pressFavoriteButtonEvent
             .emit { [weak self] userID in
                 guard let self = self else { return }
@@ -105,6 +108,7 @@ extension LocalViewModel {
         }
     }
 
+    // Section Header 리스트 생성 메서드
     private func getSectionHeaderList() {
         var list: [String] = []
         for i in favoriteSearchItem {

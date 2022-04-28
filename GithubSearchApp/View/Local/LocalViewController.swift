@@ -59,6 +59,7 @@ final class LocalViewController: BaseViewController {
 
     override func bind() {
 
+        // 즐겨찾기 유저 리스트 호출
         output.didLoadFavoriteUserList
             .drive { [weak self] item in
                 guard let self = self else { return }
@@ -67,6 +68,7 @@ final class LocalViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // 즐겨찾기 제거 버튼을 눌렀을 때
         output.didPressFavoriteButton
             .emit { [weak self] _ in
                 guard let self = self else { return }
@@ -74,6 +76,7 @@ final class LocalViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // Section Header 리스트 호출
         output.sendSectionHeaderList
             .drive { [weak self] headerList in
                 guard let self = self else { return }
@@ -81,6 +84,7 @@ final class LocalViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // 결과값 없을 때
         output.noResultAction
             .drive { [weak self] bool in
                 guard let self = self else { return }
@@ -88,6 +92,7 @@ final class LocalViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
+        // 0.5초 단위 실시간 즐겨찾기 유저 검색 기능
         mainView.searchBar.searchTextField.rx.text
             .orEmpty
             .debounce(RxTimeInterval.milliseconds(100), scheduler: MainScheduler.instance)
@@ -124,6 +129,7 @@ extension LocalViewController: UISearchBarDelegate, UISearchTextFieldDelegate {
     }
 }
 
+// iOS 14.0 이상이라면 제거 확인 얼럿, 이하라면 바로 제거
 extension LocalViewController: SearchTableViewCellDelegate {
     func didTapFavoriteButton(row: Int, userID: String) {
         if #available(iOS 14.0, *) {
@@ -137,6 +143,7 @@ extension LocalViewController: SearchTableViewCellDelegate {
     }
 }
 
+// Section Header 구현을 위해 UITableViewDataSource 활용
 extension LocalViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
