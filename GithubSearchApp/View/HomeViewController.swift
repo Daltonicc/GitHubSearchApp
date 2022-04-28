@@ -36,10 +36,10 @@ final class HomeViewController: TabmanViewController {
         bar.layout.transitionStyle = .snap
         bar.layout.contentMode = .fit
         bar.backgroundView.style = .clear
-        bar.indicator.tintColor = .black
+        bar.indicator.tintColor = .tabBottomBarColor
         bar.buttons.customize { button in
             button.tintColor = .systemGray3
-            button.selectedTintColor = .black
+            button.selectedTintColor = .tabButtonColor
         }
         addBar(bar, dataSource: self, at: .top)
     }
