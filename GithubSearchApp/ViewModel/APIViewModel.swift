@@ -184,7 +184,7 @@ extension APIViewModel {
         }
     }
 
-    private func appendData(query: String ,searchItem: [UserItem]) {
+    private func appendData(query: String, searchItem: [UserItem]) {
         for i in searchItem {
             let check = checkSearchUserName(query: query, name: i.userName)
             if check {
