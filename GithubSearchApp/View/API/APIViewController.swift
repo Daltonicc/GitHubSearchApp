@@ -15,12 +15,14 @@ final class APIViewController: BaseViewController {
     private lazy var input = APIViewModel.Input(
         requestUserListEvent: requestUserListEvent.asSignal(),
         requestNextPageListEvent: requestNextPageListEvent.asSignal(),
+        loadUserListEvent: loadUserListEvent.asSignal(),
         pressFavoriteButtonEvent: pressFavoriteButtonEvent.asSignal()
     )
     private lazy var output = viewModel.transform(input: input)
 
     private let requestUserListEvent = PublishRelay<String>()
     private let requestNextPageListEvent = PublishRelay<String>()
+    private let loadUserListEvent = PublishRelay<Void>()
     private let pressFavoriteButtonEvent = PublishRelay<Int>()
 
     private let mainView = ContentView()
@@ -32,7 +34,7 @@ final class APIViewController: BaseViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        requestUserList()
+        loadUserListEvent.accept(())
     }
 
     override func viewDidLoad() {

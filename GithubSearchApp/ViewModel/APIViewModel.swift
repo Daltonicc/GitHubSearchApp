@@ -15,6 +15,7 @@ final class APIViewModel: ViewModelType {
     struct Input {
         let requestUserListEvent: Signal<String>
         let requestNextPageListEvent: Signal<String>
+        let loadUserListEvent: Signal<Void>
         let pressFavoriteButtonEvent: Signal<Int>
     }
 
@@ -85,6 +86,15 @@ final class APIViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
 
+        // API탭 클릭했을 때, 기존 데이터 로드
+        input.loadUserListEvent
+            .emit { [weak self] _ in
+                guard let self = self else { return }
+                self.checkFavoriteStatus()
+                self.didLoadUserList.accept(self.totalSearchItem)
+            }
+            .disposed(by: disposeBag)
+
         // 즐겨찾기 추가/제거 로직
         input.pressFavoriteButtonEvent
             .emit { [weak self] row in
@@ -138,6 +148,8 @@ extension APIViewModel {
             let filterValue = favoriteUserList.filter ("userId = '\(self.totalSearchItem[i].userID)'")
             if filterValue.count == 1 {
                 totalSearchItem[i].isFavorite = true
+            } else {
+                totalSearchItem[i].isFavorite = false
             }
         }
     }
