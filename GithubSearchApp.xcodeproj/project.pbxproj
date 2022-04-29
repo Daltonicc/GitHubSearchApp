@@ -47,6 +47,7 @@
 		6A39D904281452DA004B444E /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D903281452DA004B444E /* NetworkError.swift */; };
 		6A39D906281454BB004B444E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A39D905281454BB004B444E /* UserData.swift */; };
 		6AE8EBBF281A7B8C00D4CDD5 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EBBE281A7B8C00D4CDD5 /* UIColor+Extension.swift */; };
+		6AE8EBC9281C23F600D4CDD5 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE8EBC8281C23F600D4CDD5 /* UIViewController+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,7 @@
 		6A39D903281452DA004B444E /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		6A39D905281454BB004B444E /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		6AE8EBBE281A7B8C00D4CDD5 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		6AE8EBC8281C23F600D4CDD5 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -318,6 +320,7 @@
 			children = (
 				6A39D8FD281433BB004B444E /* UITableViewController+Extension.swift */,
 				6AE8EBBE281A7B8C00D4CDD5 /* UIColor+Extension.swift */,
+				6AE8EBC8281C23F600D4CDD5 /* UIViewController+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -518,6 +521,7 @@
 				6A39D8A328129275004B444E /* SceneDelegate.swift in Sources */,
 				6A3650DD28152CA900BE71C7 /* NoResultView.swift in Sources */,
 				6A3650E428155F9C00BE71C7 /* RealmManager.swift in Sources */,
+				6AE8EBC9281C23F600D4CDD5 /* UIViewController+Extension.swift in Sources */,
 				6A39D8F9281431EA004B444E /* APIService.swift in Sources */,
 				6A3650E628155FCA00BE71C7 /* RealmModel.swift in Sources */,
 				6A3651402816A55F00BE71C7 /* LocalViewModel.swift in Sources */,

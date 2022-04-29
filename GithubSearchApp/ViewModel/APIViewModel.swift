@@ -143,6 +143,7 @@ extension APIViewModel {
         }
     }
 
+    // 검색 데이터를 가져 온 뒤, 즐겨찾기에 있는 데이터인지 확인. 있다면 isFavorite 상태 변환.
     private func checkFavoriteStatus() {
         for i in 0..<totalSearchItem.count {
             let filterValue = favoriteUserList.filter ("userId = '\(self.totalSearchItem[i].userID)'")
@@ -154,6 +155,7 @@ extension APIViewModel {
         }
     }
 
+    // Star 버튼을 눌렀을 떄, 데이터 베이스에 있는지 없는지 확인.
     private func checkDatabase(row: Int) {
         let filterValue = favoriteUserList.filter ("userId = '\(self.totalSearchItem[row].userID)'")
         if filterValue.count == 0 {
@@ -166,6 +168,12 @@ extension APIViewModel {
                 }
             }
         }
+    }
+
+    // 검색된 사용자 이름 체크
+    private func checkSearchUserName(query: String, name: String) -> Bool {
+        let check = name.contains(query)
+        return check
     }
 
     private func checkNoResult(searchItem: [UserItem]) -> Bool {
@@ -183,11 +191,6 @@ extension APIViewModel {
                 totalSearchItem.append(i)
             }
         }
-    }
-
-    private func checkSearchUserName(query: String, name: String) -> Bool {
-        let check = name.contains(query)
-        return check
     }
 
     private func addToDataBase(searchItem: UserItem) {

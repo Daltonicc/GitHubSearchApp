@@ -39,6 +39,7 @@ final class LocalViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
 
     override func setViewConfig() {
@@ -92,7 +93,7 @@ final class LocalViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
 
-        // 0.5초 단위 실시간 즐겨찾기 유저 검색 기능
+        // 0.1초 단위 실시간 즐겨찾기 유저 검색 기능
         mainView.searchBar.searchTextField.rx.text
             .orEmpty
             .debounce(RxTimeInterval.milliseconds(100), scheduler: MainScheduler.instance)
