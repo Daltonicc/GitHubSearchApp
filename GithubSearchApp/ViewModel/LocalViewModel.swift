@@ -32,8 +32,8 @@ final class LocalViewModel: ViewModelType {
 
     var disposeBag = DisposeBag()
 
-    var favoriteSearchItem: [UserItem] = []
-    var headerList: [String] = []
+    private var favoriteSearchItem: [UserItem] = []
+    private var headerList: [String] = []
 
     private var favoriteUserList: Results<FavoriteUserList>! {
         return RealmManager.shared.loadListData().sorted(byKeyPath: "userName", ascending: true)
