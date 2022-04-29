@@ -55,7 +55,7 @@ private func checkSearchUserName(query: String, name: String) -> Bool {
     return check
 }
 
-private func appendData(query: String ,searchItem: [UserItem]) {
+private func appendData(query: String, searchItem: [UserItem]) {
     for i in searchItem {
         let check = checkSearchUserName(query: query, name: i.userName)
         if check {
