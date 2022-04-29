@@ -108,15 +108,15 @@ func didTapFavoriteButton(row: Int, userID: String) {
 ## ScreenShot
 <div markdown="1">  
     <div align = "center">
-    <img src="https://user-images.githubusercontent.com/87598209/165725379-efba51be-4d4a-4241-bbdf-aa79db1cd861.png" width="250px" height="500px"></img>
-    <img src="https://user-images.githubusercontent.com/87598209/165725389-8a69f9d4-dac0-4a99-9e9a-3798c9afb9b3.png" width="250px" height="500px"></img>
-    <img src="https://user-images.githubusercontent.com/87598209/165725402-148c0fe1-0f81-42ab-ad14-f131668cc0b0.png" width="250px" height="500px"></img>
+    <img src="https://user-images.githubusercontent.com/87598209/165725379-efba51be-4d4a-4241-bbdf-aa79db1cd861.png" width="225px" height="500px"></img>
+    <img src="https://user-images.githubusercontent.com/87598209/165725389-8a69f9d4-dac0-4a99-9e9a-3798c9afb9b3.png" width="225px" height="500px"></img>
+    <img src="https://user-images.githubusercontent.com/87598209/165725402-148c0fe1-0f81-42ab-ad14-f131668cc0b0.png" width="225px" height="500px"></img>
 </div>
 <div markdown="2">  
     <div align = "center">
-    <img src="https://user-images.githubusercontent.com/87598209/165725750-79bd8034-b4e8-40fc-91bb-3648d9ebf637.png" width="250px" height="500px"></img>
-    <img src="https://user-images.githubusercontent.com/87598209/165725771-a940c47b-457c-4ffb-9008-9e892c1b28d7.png" width="250px" height="500px"></img>
-    <img src="https://user-images.githubusercontent.com/87598209/165725783-7ceeb14a-d1a0-479e-a735-7dfe8500247f.png" width="250px" height="500px"></img>
+    <img src="https://user-images.githubusercontent.com/87598209/165725750-79bd8034-b4e8-40fc-91bb-3648d9ebf637.png" width="225px" height="500px"></img>
+    <img src="https://user-images.githubusercontent.com/87598209/165725771-a940c47b-457c-4ffb-9008-9e892c1b28d7.png" width="225px" height="500px"></img>
+    <img src="https://user-images.githubusercontent.com/87598209/165725783-7ceeb14a-d1a0-479e-a735-7dfe8500247f.png" width="225px" height="500px"></img>
 </div>
 
 ## Video
