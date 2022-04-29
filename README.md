@@ -34,6 +34,11 @@ GitHub 유저 검색 API를 활용한 iOS 어플리케이션.
     Moya, SnapKit, Kingfisher, Toast, Tapman
     Realm, SwiftLint
 
+### Architecture
+
+* #### MVVM + Input/Output
+  + MVVM의 가장 큰 단점은 사람마다 구현 방식이 조금씩 다르다는 것이다. 이러한 점은 결국 다른 사람이 내 코드를 봤을때, 가독성에 좋지 않은 영향을 미칠 수 있다고 생각했다. 따라서 정형화된 패턴을 통한 통일성 있는 코드 작성을 위해 프로토콜을 활용하여 Input/Output 패턴을 적용했다.
+
 ### Issue
 
 #### 1. 사용자 이름으로 검색어 제한
