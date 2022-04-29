@@ -39,6 +39,7 @@ final class APIViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        monitorNetwork()
     }
 
     override func setViewConfig() {
