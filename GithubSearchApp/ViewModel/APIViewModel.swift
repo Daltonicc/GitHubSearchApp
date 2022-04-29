@@ -26,7 +26,6 @@ final class APIViewModel: ViewModelType {
         let indicatorActin: Driver<Bool>
     }
 
-    // API Tab
     private let didLoadUserList = BehaviorRelay<[UserItem]>(value: [])
     private let didPressFavoriteButton = PublishRelay<Int>()
     private let noResultAction = BehaviorRelay<Bool>(value: false)
@@ -57,7 +56,7 @@ final class APIViewModel: ViewModelType {
                     case .success(let data):
                         self.total = data.total
                         self.appendData(query: query, searchItem: data.userItems)
-                        self.checkIsFavoriteStatus()
+                        self.checkFavoriteStatus()
                         self.didLoadUserList.accept(self.totalSearchItem)
                         self.noResultAction.accept(self.checkNoResult(searchItem: self.totalSearchItem))
                         self.indicatorAction.accept(false)
@@ -77,7 +76,7 @@ final class APIViewModel: ViewModelType {
                     switch response {
                     case .success(let data):
                         self.appendData(query: query, searchItem: data.userItems)
-                        self.checkIsFavoriteStatus()
+                        self.checkFavoriteStatus()
                         self.didLoadUserList.accept(self.totalSearchItem)
                     case .failure(let error):
                         self.failToastAction.accept(error.errorDescription ?? "Error")
@@ -134,7 +133,7 @@ extension APIViewModel {
         }
     }
 
-    private func checkIsFavoriteStatus() {
+    private func checkFavoriteStatus() {
         for i in 0..<totalSearchItem.count {
             let filterValue = favoriteUserList.filter ("userId = '\(self.totalSearchItem[i].userID)'")
             if filterValue.count == 1 {
