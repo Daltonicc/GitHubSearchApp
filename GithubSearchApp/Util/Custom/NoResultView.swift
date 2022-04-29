@@ -36,11 +36,6 @@ final class NoResultView: BaseView {
         super.init(coder: coder)
     }
 
-    convenience init(text: String) {
-        self.init()
-        noResultLabel.text = text
-    }
-
     override func setUpView() {
 
         addSubview(noResultLabel)

@@ -22,7 +22,7 @@ final class ContentView: BaseView {
         return searchBar
     }()
     let noResultView: NoResultView = {
-        let view = NoResultView(text: "검색 결과가 없습니다.")
+        let view = NoResultView()
         view.isHidden = true
         return view
     }()
