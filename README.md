@@ -7,7 +7,7 @@ GitHub 유저 검색 API를 활용한 iOS 어플리케이션.
 - Portrait 모드만 지원
 - MVVM - Input/Output 패턴 적용
 - Storyboard를 활용하지 않고 코드로만 UI 구성
-- Swiftlint 적용으로 코드 컨벤션 확립
+- SwiftLint 적용으로 코드 컨벤션 확립
 - 라이트 모드/다크 모드 대응
 - Pagination 구현
 - [개발 공수](https://maze-mozzarella-6e5.notion.site/6ba9d82a6950406092d5785e30ac2da3)
@@ -32,12 +32,12 @@ GitHub 유저 검색 API를 활용한 iOS 어플리케이션.
     MVVM + Input/Output
     UIKit, AutoLayout
     Moya, SnapKit, Kingfisher, Toast, Tapman
-    Realm
+    Realm, SwiftLint
 
 ### Issue
 
 #### 1. 사용자 이름으로 검색어 제한
-* 이유는 알 수 없지만, 분명히 사용자 이름으로 API를 호출했음에도 Response 중에서 일부 데이터는 검색한 쿼리값에 전혀 상관 없는 데이터가 날아왔다. 
+* 분명히 사용자 이름으로 API를 호출했음에도 Response 중에서 일부 데이터는 검색한 쿼리값에 전혀 상관 없는 데이터가 날아왔다. 
 * 원인을 파악해보니 사용자 이름과 사용자의 아이디 중에서 하나만 검색어와 일치해도 Response 데이터에 추가되는 것이었다. 예를 들어 나의 깃허브 계정은 Ethan Park 이면서 Daltonicc인데, 검색어에 Ethan을 입력해도 Response 데이터에 Daltonicc이 있었다. 
 * 따로 Parameter로 제한할 수 있는 옵션이 없었기에, 사용자가 직접 처리해줘야했다.
 
